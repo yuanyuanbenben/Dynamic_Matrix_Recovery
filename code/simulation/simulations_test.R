@@ -1,5 +1,5 @@
 #
-# The following code is used for do simulation in paper
+# The following code is used for simulations in paper "Dynamic Matrix Recovery"
 #
 
 # environment
@@ -11,9 +11,9 @@ library(reshape2)
 library(foreach)
 library(doParallel)
 
-# DLR help functions and benchmark Static help functions
-source("~/project_dmc/final_version/large_FISTA.R")
-source("~/project_dmc/final_version/large_baseline_FISTA.R")
+# help functions
+source("~/Dynamic_Matrix_Recovery/code/simulation/large_FISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/simulation/large_baseline_FISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 
 # paralle computing settings
@@ -22,28 +22,27 @@ cl <- makeCluster(24)
 registerDoParallel(cl)
 
 # simulation 1:
-# T = 100, n_t = 100, M(t) is rank 5, 30*25 matrix
-# X[j,i,,] is 30*25 matrix in which only one entry is one and other entries are zero
-# the structure of M is M(t) = U(t)D(t)V(t)^T,
-# where U(t) = cos(pi*t/200)*U_0 +sin(pi*t/200)*U_1, V(t) = cos(pi*t/200)*V_0 +sin(pi*t/200)*V_1, D(t) = D_0 + t/100*D_1
-# U_0,U_1 are orthogonal basis and V_0,V_1 are orthogonal basis, D_0 = diag(25,16,9,4,1), D_1 = diag(5,4,3,2,1)
-# observations Y[j,i] = Tr(M,X[j,i,,]) + eps, eps ~ N(0,0.1)
+# T = 100, n_t = 100, M(t) is rank 10, 500*300 matrix
+# the structure of M(t) is M(t) = U(t)D(t)V(t)^T,
+# where U(t) = cos(pi*t/2)*U_0 +sin(pi*t/2)*U_1, V(t) = cos(pi*t/2)*V_0 +sin(pi*t/2)*V_1, D(t) = D_0 + t*D_1
+# U_0,U_1 are orthogonal basis and V_0,V_1 are orthogonal basis, D_0 = 10*diag(100,81,...,1), D_1 = diag(10,9,...,1)
+# observations Y = Tr(M,X) + eps, eps ~ N(0,1)
 
 # for fixed n_t and all t from 1 to T_=100
 T_ = 100
-n_t = 30000
+n_t = 30000 # 120000 for benchmark Static and TwoStep 
 p = 500
 q = 300
 r = 10
-h = 40
-result_mse <- rep(0,T_)
-result_mse_baseline <- rep(0,T_)
+# no use
 X1=0
 X2=0
 Y=0
 M_input = 0
 eps_gene = 0
+# fixed seed
 set.seed(1246326361)
+# construct U(t), D(t) and V(t)
 N = matrix(rnorm(p*q),p,q)
 svd_N <- svd(N)
 U_0 <- svd_N$u[,1:r]
@@ -52,69 +51,78 @@ V_0 <- svd_N$v[,1:r]
 V_1 <- svd_N$v[,(r+1):(2*r)]
 D_0 <- diag(r:1)
 D_1 <- D_0*D_0*10
+
+# record mse results and conputational time 
+
+#
+# DLR:our proposed algorithm 1
+#
+# calculate bandwidth h and tuning parameter lambda
 h=22
-tuning_para1 <- foreach(lambda = seq(10,15,0.25),.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE)%dopar% {
-    result_mse = rep(0,6)
-    for (t in 1:6) {
-      ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,
-                                    X2,Y,T_,n_t,p,q,r,t,h,eps_sd=1, M_input = M_input,
-                                    lambda = lambda)
-      result_mse[t] <- ret[[1]]
-      M_input <- ret[[2]]
-      X1 <- ret[[3]]
-      X2 <- ret[[4]]
-      Y <- ret[[5]]
-    }
-    result_mse
-}
-print(tuning_para1)
 lambda = 13
-result_mse = rep(0,T_)
-time = rep(0,T_)
+
+result_mse_DLR1 = rep(0,T_)
+time_DLR1 = rep(0,T_)
 for (t in 1:T_) {
-  start1 <- Sys.time()
+  start <- Sys.time()
   ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,
                                 X2,Y,T_,n_t,p,q,r,t,h,eps_sd=1, M_input = M_input,
                                 lambda = lambda)
-  result_mse[t] <- ret[[1]]
+  result_mse_DLR1[t] <- ret[[1]]
   M_input <- ret[[2]]
   X1 <- ret[[3]]
   X2 <- ret[[4]]
   Y <- ret[[5]]
-  end1 <- Sys.time()
-  print(difftime(end1, start1, units = "sec"))
-  time[t] <- difftime(end1, start1, units = "sec")
+  end <- Sys.time()
+  #print(difftime(end, start, units = "sec"))
+  time_DLR1[t] <- difftime(end1, start1, units = "sec")
 }
-datas <- data.frame(tuning_para1)
-write.csv(datas,"~/final_version/datas/cv_result.csv")
-for (t in 1:T_) {
-  print(t)
-  ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,X2,Y,T_,n_t,p,q,r,t,h,eps_sd = 1, 
-                                M_input = M_input,lambda = lambda,eps_rela = FALSE,X_rela = TRUE,rela_para = 1)
-  result_mse[t] <- ret[[1]][[1]]
-  M_input = ret[[2]]
-  print(result_mse[t])
-  X1 = ret[[3]]
-  X2 = ret[[4]]
-  Y = ret[[5]]
+# change settings for n_t from 5000 to 30000 and T from 100 to 300 
+# combine those results mse as combine_mse and save it 
+# write.csv(combine_mse,"~/Dynamic_Matrix_Recovery/data/dmc_5000_30000.csv")
+
+#
+# DLR: random initialization
+#
+h=22
+lambda = 13
+result_mse_DLR2 <- rep(0, T_)
+time_DLR2 = rep(0,T_)
+# paraller version
+foreach(t=1:T_,.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE)%dopar% {
+  start <- Sys.time()
+  ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,X2,Y,T_,
+                                n_t,p,q,r,t,h,eps_sd=1, M_input = M_input,lambda = lambda)
+  result_mse_DLR2[t] <- ret[[1]]
+  end <- Sys.time()
+  time_DLR2[t] <- difftime(end1, start1, units = "sec")
 }
+
+#
+# Static
+#
+# calculate bandwidth h and tuning parameter lambda
 lambda=58
 t=20
-tuning_para_baseline <- foreach(t=1:T_,.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE) %dopar% {
-  simulation_func_baseline(U_0,U_1,V_0,V_1,D_0,D_1,T_,n_t,p,q,r,t,eps_sd = 1,lambda = 58)
+result_mse_Static <- rep(0, T_)
+time_Static = rep(0,T_)
+M_estimate_Static <- array(0,dim=c(T_,p,q)
+foreach(t=1:T_,.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE)%dopar% {
+  begin <- Sys.time()
+  ret <- simulation_func_baseline(U_0,U_1,V_0,V_1,D_0,D_1,T_,n_t,p,q,r,t,eps_sd = 1,lambda = 58)
+  result_mse_Static[t] <- ret[[1]]
+  M_estimate_Static[t,,] <- ret[[2]]
+  end <- Sys.time()
+  difftime(end1, begin1, units = "sec")
 }
-# time test
-begin1 <- Sys.time()
-simulation_func_baseline(U_0,U_1,V_0,V_1,D_0,D_1,T_,n_t,p,q,r,t,eps_sd = 1,lambda = 58)
-end1 <- Sys.time()
-print(difftime(end1, begin1, units = "sec"))
-#mse_baseline <- rep(0,T_)
-#for (i in 1:T_) {
-#  mse_baseline[i] <- tuning_para_baseline[i]
-#}
-write.csv(tuning_para_baseline,"~/final_version/datas/baseline_120000_matrix.csv")
-#m <- read.csv("~/final_version/datas/baseline_30000.csv")[,2]
-# h=22, lambda=13
+#save                        
+#write.csv(result_mse_Static,"~/Dynamic_Matrix_Recovery/data/baseline_120000.csv")
+#write.csv(M_estimate_Static,"~/Dynamic_Matrix_Recovery/data/baseline_120000_matrix.csv")
+
+#
+# TwoStep
+# 
+
 #ret = list(0,0,0,0,0)
 h=22
 lambda=13
