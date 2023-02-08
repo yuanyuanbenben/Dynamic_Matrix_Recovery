@@ -11,14 +11,17 @@ library(reshape2)
 library(foreach)
 library(doParallel)
 
+# DLR help functions and benchmark Static help functions
 source("~/project_dmc/final_version/large_FISTA.R")
 source("~/project_dmc/final_version/large_baseline_FISTA.R")
+source("~/Dynamic-Matrix-Recovery/code/simulation/help_functions.R")
 
+# paralle computing settings
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(24)
 registerDoParallel(cl)
 
-# kernel 
+# kernel function used in DLR method
 kernel_weight<- function(t,h,T_){
   epan_ker <- function(x,h){
     if (abs(x) > as.integer(h/2)){
