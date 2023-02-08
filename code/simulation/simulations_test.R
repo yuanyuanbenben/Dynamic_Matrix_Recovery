@@ -1,13 +1,13 @@
-###
-# some simulations
-###
+#
+# The following code is used for do simulation in paper
+#
 
 # environment
 library(kernlab)
-# library(CVXR)
 library(psych)
 library(ggplot2)
 library(reshape2)
+# if parallel computing need
 library(foreach)
 library(doParallel)
 
