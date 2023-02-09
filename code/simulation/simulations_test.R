@@ -21,12 +21,15 @@ cl.cores = detectCores(logical = F)
 cl <- makeCluster(24)
 registerDoParallel(cl)
 
+#
 # simulation 1:
+# independent case
 # T = 100, n_t = 100, M(t) is rank 10, 500*300 matrix
 # the structure of M(t) is M(t) = U(t)D(t)V(t)^T,
 # where U(t) = cos(pi*t/2)*U_0 +sin(pi*t/2)*U_1, V(t) = cos(pi*t/2)*V_0 +sin(pi*t/2)*V_1, D(t) = D_0 + t*D_1
 # U_0,U_1 are orthogonal basis and V_0,V_1 are orthogonal basis, D_0 = 10*diag(100,81,...,1), D_1 = diag(10,9,...,1)
 # observations Y = Tr(M,X) + eps, eps ~ N(0,1)
+#
 
 # for fixed n_t and all t from 1 to T_=100
 T_ = 100
@@ -35,9 +38,9 @@ p = 500
 q = 300
 r = 10
 # no use
-X1=0
-X2=0
-Y=0
+X1 = 0
+X2 = 0
+Y = 0
 M_input = 0
 eps_gene = 0
 # fixed seed
@@ -52,15 +55,13 @@ V_1 <- svd_N$v[,(r+1):(2*r)]
 D_0 <- diag(r:1)
 D_1 <- D_0*D_0*10
 
-# record mse results and conputational time 
-
 #
 # DLR:our proposed algorithm 1
 #
 # calculate bandwidth h and tuning parameter lambda
 h=22
 lambda = 13
-
+# record mse results and conputational time 
 result_mse_DLR1 = rep(0,T_)
 time_DLR1 = rep(0,T_)
 for (t in 1:T_) {
@@ -77,9 +78,34 @@ for (t in 1:T_) {
   #print(difftime(end, start, units = "sec"))
   time_DLR1[t] <- difftime(end1, start1, units = "sec")
 }
+
+# find the influences of rho and tau on the estimation results
 # change settings for n_t from 5000 to 30000 and T from 100 to 300 
 # combine those results mse as combine_mse and save it 
 # write.csv(combine_mse,"~/Dynamic_Matrix_Recovery/data/dmc_5000_30000.csv")
+tuning_para <- foreach(n_t = seq(5000,30000,1000),
+                       .packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE) %dopar% {
+  result_mse = rep(0,T_)
+  for (t in 1:T_) {
+    ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,
+                                  X2,Y,T_,n_t,p,q,r,t,h,eps_sd = 1, M_input = M_input,lambda = lambda,tor=tor)
+    result_mse[t] <- ret[[1]][[1]]
+    M_input <- ret[[2]]
+    X1 <- ret[[3]]
+    X2 <- ret[[4]]
+    Y <- ret[[5]]
+  }
+  result_mse
+  }
+datas <- array(0,c(100,26))
+for (i in 1:100) {
+  for (j in 1:26) {
+    datas[i,j] <- tuning_para[j,i]
+  }
+}
+# save
+# datas <- data.frame(datas)
+# write.csv(datas,"~/Dynamic_Matrix_Recovery/data/phase_transition_precise.csv")
 
 #
 # DLR: random initialization
@@ -123,61 +149,41 @@ foreach(t=1:T_,.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbo
 # TwoStep
 # 
 
-#ret = list(0,0,0,0,0)
-h=22
-lambda=13
+                           
+                           
+                           
+#
+# Tensor
+#
+
+                           
+#
+# simulation2
+# dependent case
+# other settings are the same as in simulation1
+#
 tuning_para <- foreach(eps_sd=c(0.1,0.5,1,1.5,2,5),.packages = c("matlab","psych","kernlab"),.verbose=TRUE) %:% 
-  foreach(rela_para=seq(0,1,0.1),.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE) %dopar% {
+foreach(rela_para=seq(0,1,0.1),.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE) %dopar% {
   result_mse = rep(0,T_)
   for (t in 1:T_) {
-    ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,
+  ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,
                                   X2,Y,T_,n_t,p,q,r,t,h,eps_sd=eps_sd, M_input = M_input,
                                   lambda = lambda,X_rela = TRUE,rela_para = rela_para)
-    result_mse[t] <- ret[[1]][[1]]
-    M_input <- ret[[2]]
-    X1 <- ret[[3]]
-    X2 <- ret[[4]]
-    Y <- ret[[5]]
+  result_mse[t] <- ret[[1]][[1]]
+  M_input <- ret[[2]]
+  X1 <- ret[[3]]
+  X2 <- ret[[4]]
+  Y <- ret[[5]]
   }
   result_mse
-  }
+}                
 datas <- array(0,c(100,66))
 for (i in 1:6) {
   for (j in 1:11) {
     datas[,(i-1)*11+j] <- tuning_para[[i]][j,]
   }
 }
-datas <- data.frame(datas)
-write.csv(datas,"~/final_version/datas/dependent_X_mc.csv")
-#mse_results <- data.frame("5000"=tuning_para[1,],"10000"=tuning_para[2,],"15000"=tuning_para[3,],"20000"=tuning_para[4,],"25000"=tuning_para[5,],"30000"=tuning_para[6,])
-#write.csv(mse_results,"~/final_version/datas/dmc_5000_30000.csv")
-#m <- read.csv("~/final_version/datas/dmc_5000_30000.csv")
-
-# phase transition
-h=22
-tuning_para <- foreach(n_t = seq(5000,30000,1000),
-                       lambda = seq(13/6,13,13/30),tor=seq(10,60,2),
-                       .packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE) %dopar% {
-  result_mse = rep(0,T_)
-  for (t in 1:T_) {
-    ret <- simulation_func_single(U_0,U_1,V_0,V_1,D_0,D_1,X1,
-                                  X2,Y,T_,n_t,p,q,r,t,h,eps_sd = 1, M_input = M_input,lambda = lambda,tor=tor)
-    result_mse[t] <- ret[[1]][[1]]
-    M_input <- ret[[2]]
-    X1 <- ret[[3]]
-    X2 <- ret[[4]]
-    Y <- ret[[5]]
-  }
-  result_mse
-  }
-datas <- array(0,c(100,26))
-for (i in 1:100) {
-  for (j in 1:26) {
-    datas[i,j] <- tuning_para[j,i]
-  }
-}
-datas <- data.frame(datas)
-write.csv(datas,"~/final_version/datas/phase_transition_precise.csv")
-
+#datas <- data.frame(datas)
+#write.csv(datas,"~/Dynamic_Matrix_Recovery/data/dependent_X_mc.csv")
 
 stopCluster(cl) 
