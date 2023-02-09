@@ -1,14 +1,13 @@
-
-# pre data
-data <- read.csv("netflix_data.csv")
+# pre process 
+data <- read.csv("~/Dynamic_Matrix_Recovery/data/netflix_data.csv")
 names(data) <- c("movies","id","score","time")
 dims <- dim(data)[1]
 data$time <- as.Date(data$time)
 movies <- as.data.frame(table(data$movies))
-used_movies <- as.numeric(levels(droplevels(movies[movies$Freq>10000,1])))#2500
+used_movies <- as.numeric(levels(droplevels(movies[movies$Freq>25000,1])))
 data <- data[data$movies %in% used_movies,]
 ids <- as.data.frame(table(data$id))
-used_id <- as.numeric(levels(droplevels(ids[ids$Freq>159,1])))#700
+used_id <- as.numeric(levels(droplevels(ids[ids$Freq>700,1])))
 data <- data[data$id %in% used_id,]
 set.seed(1228716052)
 index_train <- sample(1:dim(data)[1],round(0.8*dim(data)[1]))
@@ -35,22 +34,9 @@ X1_total <- list()
 X2_total <- list()
 Y_total <- list()
 
-#time_index <- rep(1,100)
-#for (i in 1:99) {
-#  for (j in time_index[i]:len) {
-#    if (train_data$time[j] > as.Date(date_split*i,origin)){
-#      time_index[i+1] <- j-1
-#      break
-#    }
-#  }
-#}
-#index <- rep(1,101)
-#index[1:100] <- time_index
-#index[101] <- len
-#index[1] <- 0
 index <- seq(0,len,len_)
 
-# data split
+# data splitting
 for (i in 1:T_) {
   x1 <- rep(0,index[i+1] - index[i])
   x2 <- rep(0,index[i+1] - index[i])
@@ -94,52 +80,52 @@ for (i in 1:T_) {
 }
 
 # 5-fold cv
-set.seed(12471124)
-train_X1_total_cv1 <- list()
-train_X2_total_cv1 <- list()
-train_Y_total_cv1 <- list()
 
-train_X1_total_cv2 <- list()
-train_X2_total_cv2 <- list()
-train_Y_total_cv2 <- list()
+# set.seed(12471124)
+# train_X1_total_cv1 <- list()
+# train_X2_total_cv1 <- list()
+# train_Y_total_cv1 <- list()
 
-train_X1_total_cv3 <- list()
-train_X2_total_cv3 <- list()
-train_Y_total_cv3 <- list()
+# train_X1_total_cv2 <- list()
+# train_X2_total_cv2 <- list()
+# train_Y_total_cv2 <- list()
 
-train_X1_total_cv4 <- list()
-train_X2_total_cv4 <- list()
-train_Y_total_cv4 <- list()
+# train_X1_total_cv3 <- list()
+# train_X2_total_cv3 <- list()
+# train_Y_total_cv3 <- list()
 
-set.seed(1278451)
-for (i in 1:T_) {
-  index_1 <- sample(1:18700,round(0.25*18700))
-  index_2 <- sample(1:14025,round(14025/3))
-  index_3 <- sample(1:9350,round(9350/2))
-  c0 <- train_X1_total[[i]] 
-  train_X1_total_cv1[[i]] <- c0[index_1]
-  c1 <- c0[-index_1]
-  train_X1_total_cv2[[i]] <- c1[index_2]
-  c2 <- c1[-index_2]
-  train_X1_total_cv3[[i]] <- c2[index_3]
-  c3 <- c2[-index_3]
-  train_X1_total_cv4[[i]] <- c3
+# train_X1_total_cv4 <- list()
+# train_X2_total_cv4 <- list()
+# train_Y_total_cv4 <- list()
+
+# for (i in 1:T_) {
+#   index_1 <- sample(1:18700,round(0.25*18700))
+#   index_2 <- sample(1:14025,round(14025/3))
+#   index_3 <- sample(1:9350,round(9350/2))
+#   c0 <- train_X1_total[[i]] 
+#   train_X1_total_cv1[[i]] <- c0[index_1]
+#   c1 <- c0[-index_1]
+#   train_X1_total_cv2[[i]] <- c1[index_2]
+#   c2 <- c1[-index_2]
+#   train_X1_total_cv3[[i]] <- c2[index_3]
+#   c3 <- c2[-index_3]
+#   train_X1_total_cv4[[i]] <- c3
   
-  c0 <- train_X2_total[[i]] 
-  train_X2_total_cv1[[i]] <- c0[index_1]
-  c1 <- c0[-index_1]
-  train_X2_total_cv2[[i]] <- c1[index_2]
-  c2 <- c1[-index_2]
-  train_X2_total_cv3[[i]] <- c2[index_3]
-  c3 <- c2[-index_3]
-  train_X2_total_cv4[[i]] <- c3
+#   c0 <- train_X2_total[[i]] 
+#   train_X2_total_cv1[[i]] <- c0[index_1]
+#   c1 <- c0[-index_1]
+#   train_X2_total_cv2[[i]] <- c1[index_2]
+#   c2 <- c1[-index_2]
+#   train_X2_total_cv3[[i]] <- c2[index_3]
+#   c3 <- c2[-index_3]
+#   train_X2_total_cv4[[i]] <- c3
   
-  c0 <- train_Y_total[[i]] 
-  train_Y_total_cv1[[i]] <- c0[index_1]
-  c1 <- c0[-index_1]
-  train_Y_total_cv2[[i]] <- c1[index_2]
-  c2 <- c1[-index_2]
-  train_Y_total_cv3[[i]] <- c2[index_3]
-  c3 <- c2[-index_3]
-  train_Y_total_cv4[[i]] <- c3
-}
+#   c0 <- train_Y_total[[i]] 
+#   train_Y_total_cv1[[i]] <- c0[index_1]
+#   c1 <- c0[-index_1]
+#   train_Y_total_cv2[[i]] <- c1[index_2]
+#   c2 <- c1[-index_2]
+#   train_Y_total_cv3[[i]] <- c2[index_3]
+#   c3 <- c2[-index_3]
+#   train_Y_total_cv4[[i]] <- c3
+# }
