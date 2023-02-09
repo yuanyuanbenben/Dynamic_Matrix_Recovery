@@ -169,7 +169,7 @@ for (t in 1:T_) {
   result_mse[t] <- compare_matrix_func(M,M_,p,q)[[1]]
   print(result_mse[t])
 }
-#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/output/localsmooth_120000_2.csv")                                                   
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/output/localsmooth_120000.csv")                                                   
                            
 #
 # Tensor
