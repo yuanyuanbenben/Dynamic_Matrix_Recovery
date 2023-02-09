@@ -10,7 +10,8 @@ Lipschitz_base_func <- function(X1,X2,n_t,p,q){
 }
 
 threshold_func <- function(x) sapply(x, function(z) max(0,z))
-
+                                     
+# compute M[x1,x2]
 baseline_inner_pro_func_M <- function(X1,X2,M,n_t){
   ret_vec <- 1:n_t
   for (i in 1:n_t) {
@@ -18,9 +19,12 @@ baseline_inner_pro_func_M <- function(X1,X2,M,n_t){
   }
   return(ret_vec)
 }
+                                     
 baseline_obj_func <- function(Y,inner_pro){
   return(sum((Y-inner_pro)*(Y-inner_pro)))
 }
+
+# compute gradient
 baseline_grad_func <- function(Y,inner_pro,X1,X2,n_t,p,q){
   # Y, inner_pro T*n_t
   # X T*n_t*p*q
@@ -36,7 +40,7 @@ baseline_grad_func <- function(Y,inner_pro,X1,X2,n_t,p,q){
 baseline_FISTA_func <- function(X1,X2,Y,n_t,p,q,lambda,itertime=30000,constant=TRUE,tor=1,init=FALSE,M_input=FALSE){
   # initial
   L <- Lipschitz_base_func(X1,X2,n_t,p,q)
-  print(L)
+  #print(L)
   t = 1
   if (init){
     M = M_input
