@@ -1,6 +1,5 @@
 # from results of Static method to TwoStep method
 # using an additional local smooth
-# input data
 
 createdata_func <- function(matrix_array,t,T_,h){
   h_ = as.integer(h/2)
@@ -44,5 +43,3 @@ local_smooth <- function(matrix_array,T_,t,h,p,q,lambda){
   return(M)
 }
                                      
-#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/localsmooth_120000_2.csv")
-#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/baseline_120000.csv")
