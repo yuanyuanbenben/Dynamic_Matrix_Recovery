@@ -41,22 +41,8 @@ local_smooth <- function(matrix_array,T_,t,h,p,q,lambda){
   for (i in 1:len) {
     M <- M + weight[i]*matrix_array[i,,]
   }
-  #svd_M <- svd(M)
-  #N <- svd_M$u%*%diag(threshold_func(svd_M$d-lambda))%*%t(svd_M$v)
   return(M)
 }
-
-result_mse <- rep(0,T_)
-h=24
-lambda = 1
-for (t in 1:T_) {
-  M_in <- createdata_func(matrix_array,t,T_,h)
-  M <- local_smooth(M_in,T_,t,h,p,q,lambda = lambda)
-  #M <- matrix_array[t,,]
-  M_ =  (cos(pi*t/2/T_)*U_0 + sin(pi*t/2/T_)*U_1)%*%(D_1 + 
-                                                       t/T_*D_0)%*%t(cos(pi*t/2/T_)*V_0 + sin(pi*t/2/T_)*V_1)
-  result_mse[t] <- compare_matrix_func(M,M_,p,q)[[1]]
-  print(result_mse[t])
-}
-#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/datas/localsmooth_120000_2.csv")
-#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/datas/baseline_120000.csv")
+                                     
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/localsmooth_120000_2.csv")
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/baseline_120000.csv")
