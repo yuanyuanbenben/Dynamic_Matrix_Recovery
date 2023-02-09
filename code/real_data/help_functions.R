@@ -56,7 +56,7 @@ cs_test_error_func <- function(M,N,p,q){
 }
 
 
-construc_pic <- function(t,l,mode){
+construc_pic <- function(t,l,mode,S_total){
   s = S_total[mode,t,,]
   m = s+l
   m[m<0]=0
