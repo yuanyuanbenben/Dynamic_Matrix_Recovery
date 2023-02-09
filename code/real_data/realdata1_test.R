@@ -54,7 +54,7 @@ for (t in 1:T_) {
   # test error 
   result_mse[t] <- test_error_func(M_input,test_X1_total[[t]],test_X2_total[[t]],test_Y[[t]])
 #   print(result_mse[t])
-  write.csv(result_mse,paste("~/Dynamic_Matrix_Recovery/data/mse_",t,".csv",sep=""))
+  write.csv(result_mse,paste("~/Dynamic_Matrix_Recovery/output/netflix_output/mse_",t,".csv",sep=""))
 }
 end <- Sys.time()
 print(difftime(end, begin, units = "sec"))
@@ -77,7 +77,7 @@ for (t in 1:T_) {
   # test error 
   result_mse[t] <- test_error_func(M_input,test_X1_total[[t]],test_X2_total[[t]],test_Y[[t]])
 #   print(result_mse[t])
-  write.csv(result_mse,paste("~/Dynamic_Matrix_Recovery/data/baseline_mse_",t,".csv",sep=""))
+  write.csv(result_mse,paste("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_",t,".csv",sep=""))
 }
 end <- Sys.time()
 print(difftime(end, begin, units = "sec"))
