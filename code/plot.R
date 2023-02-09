@@ -291,16 +291,16 @@ finish_ = "2006-3-01"
 T_ = 100
 mse_total = matrix(0,T_,101)
 for (i in 1:T_) {
-  mse_total[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/mse_",i,".csv",sep = ""))[1:101,2]
+  mse_total[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/netflix_output/mse_",i,".csv",sep = ""))[1:101,2]
 }
 mse_baseline = matrix(0,T_,101)
 for (i in 1:T_) {
-  mse_baseline[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_mse_",i,".csv",sep = ""))[1:101,2]
+  mse_baseline[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_",i,".csv",sep = ""))[1:101,2]
 }
 mse_netflix = mse_total[,73]
 mse_netflix_baseline = mse_baseline[,73]
-mse_netflix_twostep = read.csv("~/Dynamic_Matrix_Recovery/output/baseline_mse_twostep")[,2]
-mse_netflix_tensor = read.csv("~/Dynamic_Matrix_Recovery/output/baseline_mse_tensor")[,2]
+mse_netflix_twostep = read.csv("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_twostep")[,2]
+mse_netflix_tensor = read.csv("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_tensor")[,2]
 mse_data <- data.frame("t"=seq.Date(as.Date(origin),as.Date(finish),by=22),"Static"=mse_netflix_baseline,"TwoStep"=mse_netflix_twostep,
                        "Tensor"=mse_netflix_tensor,"DLRTR"=mse_netflix)
 mydata <- melt(mse_data,id="t")
