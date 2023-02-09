@@ -397,7 +397,7 @@ ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100
   for (iter in 1:itertime) {
     # update Z
     print(iter)
-    begin <- Sys.time()
+#     begin <- Sys.time()
     Z[X] = 1/(lamda + 3*beta)*(W1+W2+W3+beta*(Y1+Y2+Y3)+lamda*Y)[X]
     Z[!X] = 1/(3*beta)*(W1+W2+W3+beta*(Y1+Y2+Y3))[!X]
     # update stepsize
@@ -414,9 +414,9 @@ ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100
     W3 = W3 - beta*(Z - Y3)
     beta = beta*c_beta
     lamda = lamda*c_lamda
-    end <- Sys.time()
-    print(difftime(end, begin, units = "sec"))
-    print(mean_time_mse(M,Z,T_,p,q))
+#     end <- Sys.time()
+#     print(difftime(end, begin, units = "sec"))
+#     print(mean_time_mse(M,Z,T_,p,q))
   }
   return(Z)
 }
