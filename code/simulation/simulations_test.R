@@ -16,7 +16,7 @@ source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 
-# paralle computing settings
+# paraller computing settings
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(24)
 registerDoParallel(cl)
