@@ -35,6 +35,7 @@ h=42
 lambda=11
 tor=10
 result_mse = rep(0,T_)
+begin <- Sys.time()
 for (t in 1:T_) {
 #   print(t)
   datas <- realdata_createdata_func(t,X1_total,X2_total,Y_total,T_,h)
@@ -54,6 +55,8 @@ for (t in 1:T_) {
 #   print(result_mse[t])
   write.csv(result_mse,paste("~/Dynamic_Matrix_Recovery/data/mse_",t,".csv",sep=""))
 }
+end <- Sys.time()
+print(difftime(end, begin, units = "sec"))
 
 #
 # Static method
@@ -62,6 +65,7 @@ batch_size = as.integer(dim(train_data)[1]/30/42)
 lambda = 0.55
 tor=10
 result_mse = rep(0,T_)
+begin <- Sys.time()
 for (t in 1:T_) {
   X1 <- X1_total[[t]]
   X2 <- X2_total[[t]]
@@ -74,7 +78,8 @@ for (t in 1:T_) {
 #   print(result_mse[t])
   write.csv(result_mse,paste("~/Dynamic_Matrix_Recovery/data/baseline_mse_",t,".csv",sep=""))
 }
-
+end <- Sys.time()
+print(difftime(end, begin, units = "sec"))
 
 # cv used
 # batch_size = as.integer(dim(train_data)[1]/30/42)
@@ -176,8 +181,10 @@ for (j in 1:T_) {
     Y_tensor_test[j,index1[i],index2[i]] <- test_Y[[j]][i]
   }
 }
-
+begin <- Sys.time()
 Y_tensor_hat <- ADM_TR(X_tensor,Y_tensor,T_,p,q,beta = 0.1,lamda=0.3,c_beta=1,c_lamda=1,itertime = 1000)
+end <- Sys.time()
+print(difftime(end, begin, units = "sec"))
 Y_tensor_test_hat <- Y_tensor_hat[X_tensor_test]
 tensor_mse <- mean_time_mse(Y_tensor_test,X_tensor_test,Y_tensor_test_hat,T_,p,q)
 # write.csv(tensor_mse,"~/Dynamic_Matrix_Recovery/output/baseline_mse_tensor.R")
