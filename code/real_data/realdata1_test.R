@@ -14,7 +14,6 @@ library(npmr)
 # help functions
 source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
-source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
 load("~/Dynamic_Matrix_Recovery/code/real_data/netflixdata.RData")
 
@@ -150,5 +149,37 @@ for (t in 1:T_) {
 #     }
 #     write.csv(loss,paste("~/final_version/datas/cv_",h,"_",lambda,".csv",sep = ""))
 # }
+
+#
+# Tensor method
+#
+X_tensor <- array(FALSE,dim = c(T_,p,q))
+Y_tensor <- array(0,dim = c(T_,p,q))
+for (j in 1:T_) {
+  index1 <- X1_total[[j]]
+  index2 <- X2_total[[j]]
+  lens <- length(index1)
+  for (i in 1:lens) {
+    X_tensor[j,index1[i],index2[i]] <- TRUE
+    Y_tensor[j,index1[i],index2[i]] <- Y[[j]][i]
+  }
+}
+
+X_tensor_test <- array(FALSE,dim = c(T_,p,q))
+Y_tensor_test <- array(0,dim = c(T_,p,q))
+for (j in 1:T_) {
+  index1 <- test_X1_total[[j]]
+  index2 <- test_X2_total[[j]]
+  lens <- length(index1)
+  for (i in 1:lens) {
+    X_tensor_test[j,index1[i],index2[i]] <- TRUE
+    Y_tensor_test[j,index1[i],index2[i]] <- test_Y[[j]][i]
+  }
+}
+
+Y_tensor_hat <- ADM_TR(X_tensor,Y_tensor,T_,p,q,beta = 0.1,lamda=0.3,c_beta=1,c_lamda=1,itertime = 1000)
+Y_tensor_test_hat <- Y_tensor_hat[X_tensor_test]
+tensor_mse <- mean_time_mse(Y_tensor_test,X_tensor_test,Y_tensor_test_hat,T_,p,q)
+# write.csv(tensor_mse,"~/Dynamic_Matrix_Recovery/output/baseline_mse_tensor.R")
 
 stopCluster(cl) 
