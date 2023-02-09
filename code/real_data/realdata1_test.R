@@ -1,10 +1,9 @@
 ###
-# some simulations
+# the netflix recommandation system example
 ###
 
 # environment
 library(kernlab)
-# library(CVXR)
 library(psych)
 library(ggplot2)
 library(reshape2)
@@ -12,14 +11,17 @@ library(foreach)
 library(doParallel)
 library(npmr)
 
-source("~/project_dmc/real_data/large_baseline_FISTA.R")
-source("~/project_dmc/real_data/large_FISTA.R")
+# help functions
+source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 
+# paraller computing settings
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(58)
 registerDoParallel(cl)
 
-# real data 1
+# real data 
 # netflix recommandation system data
 
 # error functions
