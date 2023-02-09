@@ -15,14 +15,12 @@ library(npmr)
 source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
+load("~/Dynamic_Matrix_Recovery/code/real_data/netflixdata.RData")
 
 # paraller computing settings
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(58)
 registerDoParallel(cl)
-
-# real data 
-# netflix recommandation system data
 
 # error functions
 test_error_func <- function(M,X1,X2,Y){
