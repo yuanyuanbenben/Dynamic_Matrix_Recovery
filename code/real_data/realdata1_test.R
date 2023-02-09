@@ -14,6 +14,7 @@ library(npmr)
 # help functions
 source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
 load("~/Dynamic_Matrix_Recovery/code/real_data/netflixdata.RData")
 
