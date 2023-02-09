@@ -1,8 +1,9 @@
+# real data 2
+# DIVIS 2017 videos
+
 # environment
 library(kernlab)
-# library(CVXR)
 library(psych)
-#library(matlab)
 library(ggplot2)
 library(reshape2)
 library(foreach)
@@ -12,15 +13,15 @@ library(npmr)
 source("~/pic_data/cs_FISTA_1.R")
 source("~/pic_data/cs_baseline_FISTA.R")
 source("~/pic_data/robust_pca.R")
+load("~/Dynamic_Matrix_Recovery/code/real_data/vedio_data.RData")
+
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(21)
 registerDoParallel(cl)
 
-# real data 2
-# DIVIS 2017 videos
 conv_ker = 1/16*matrix(c(1,2,1,2,4,2,1,2,1),3,3)
-# conv_ker = matrix(c(-1,-1,-1,-1,9,-1,-1,-1,-1),3,3)
-n = 240000
+
+n = 60000
 h = 5
 
 T_ = dim(img_total_b)[1]
