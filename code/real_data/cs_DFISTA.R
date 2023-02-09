@@ -1,4 +1,5 @@
-# using FISTA algorithm
+# using FISTA algorithm for compressed sensing problem
+# real data example 2: compress and recover the lion video from Davis dataset 
 
 # kernel 
 kernel_weight<- function(t,h,T_){
