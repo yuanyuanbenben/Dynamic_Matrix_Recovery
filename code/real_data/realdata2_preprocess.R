@@ -19,6 +19,10 @@ for (index in 0:95) {
   img_total_b[index+1,,] <- img[,,3]
 }
 
+T_ = dim(img_total_b)[1]
+p = dim(img_total_b)[2]
+q = dim(img_total_b)[3]
+
 # show jpeg
 # test 
 # par(mar=c(0,1,0,1))
