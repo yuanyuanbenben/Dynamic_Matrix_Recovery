@@ -129,44 +129,6 @@ HaLRTC <- function(X,Y,a,T_,p,q,rho=1,itertime=1000){
 write.csv(train_data,'tensor_netflix_traindata.csv')
 write.csv(test_data,'tensor_netflix_testdata.csv')
 
-# X1_total,X2_total,Y
-X_tensor <- array(FALSE,dim = c(T_,p,q))
-Y_tensor <- array(0,dim = c(T_,p,q))
-for (j in 1:T_) {
-  index1 <- X1_total[[j]]
-  index2 <- X2_total[[j]]
-  lens <- length(index1)
-  for (i in 1:lens) {
-    X_tensor[j,index1[i],index2[i]] <- TRUE
-    Y_tensor[j,index1[i],index2[i]] <- Y[[j]][i]
-  }
-}
 
-X_tensor_test <- array(FALSE,dim = c(T_,p,q))
-Y_tensor_test <- array(0,dim = c(T_,p,q))
-for (j in 1:T_) {
-  index1 <- test_X1_total[[j]]
-  index2 <- test_X2_total[[j]]
-  lens <- length(index1)
-  for (i in 1:lens) {
-    X_tensor_test[j,index1[i],index2[i]] <- TRUE
-    Y_tensor_test[j,index1[i],index2[i]] <- test_Y[[j]][i]
-  }
-}
-#a = c(1/3,1/3,1/3)
-#rho=10
-Y_tensor_hat <- ADM_TR(X_tensor,Y_tensor,T_,p,q,beta = 0.1,lamda=0.3,c_beta=1,c_lamda=1,itertime = 1000)
-#M_hat <- HaLRTC(X,Y,a,T_,p,q,rho=rho,itertime = 10000)
-write.csv(Y_tensor_hat,'~/final_version/datas/tensor_netflix.csv')
-Y_tensor_test_hat <- Y_tensor_hat[X_tensor_test]
-mean_time_mse <- function(Y_tensor_test,X_tensor_test,Y_tensor_test_hat,T_,p,q){
-  err <- rep(0,T_)
-  for (i in 1:T_) {
-    err[i] = sum((Y_tensor_test[i,,]-Y_tensor_test_hat[i,,])^2)/sum(X_tensor_test[i,,])
-  }
-  return(err)
-}
-
-mean_time_mse(Y_tensor_test,X_tensor_test,Y_tensor_test_hat,T_,p,q)
 
 
