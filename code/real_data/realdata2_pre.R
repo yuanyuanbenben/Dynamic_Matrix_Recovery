@@ -8,19 +8,16 @@ img_total_g <- array(0,dim = c(96,480,854))
 img_total_b <- array(0,dim = c(96,480,854))
 for (index in 0:95) {
   if (index < 10){
-    dic <- paste("D:/OneDrive/?ļ?/project/final_version/real_data/DAVIS/JPEGImages/480p/lions/0000",index,".jpg",sep = "")
+    dic <- paste("~/Dynamic_Matrix_Recovery/data/lions/0000",index,".jpg",sep = "")
   }
   else{
-    dic <- paste("D:/OneDrive/?ļ?/project/final_version/real_data/DAVIS/JPEGImages/480p/lions/000",index,".jpg",sep = "")
+    dic <- paste("~/Dynamic_Matrix_Recovery/data/lions/000",index,".jpg",sep = "")
   }
   img <- readJPEG(dic)
   img_total_r[index+1,,] <- img[,,1]
   img_total_g[index+1,,] <- img[,,2]
   img_total_b[index+1,,] <- img[,,3]
 }
-
-
-
 
 # show jpeg
 # test 
