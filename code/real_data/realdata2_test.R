@@ -10,9 +10,10 @@ library(foreach)
 library(doParallel)
 library(npmr)
 
-source("~/pic_data/cs_FISTA_1.R")
-source("~/pic_data/cs_baseline_FISTA.R")
-source("~/pic_data/robust_pca.R")
+source("~/Dynamic_Matrix_Recovery/code/real_data/cs_DFISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/real_data/cs_baseline_FISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
+source("~/Dynamic_Matrix_Recovery/code/real_data/robust_pca.R")
 load("~/Dynamic_Matrix_Recovery/code/real_data/vedio_data.RData")
 
 cl.cores = detectCores(logical = F)
@@ -21,100 +22,13 @@ registerDoParallel(cl)
 
 conv_ker = 1/16*matrix(c(1,2,1,2,4,2,1,2,1),3,3)
 
+set.seed(378461087)
+
+# compress step
 n = 60000
 h = 5
-
-T_ = dim(img_total_b)[1]
-p = dim(img_total_b)[2]
-q = dim(img_total_b)[3]
-
-set.seed(378461087)
 X1_total <- array(sample(2:(p-1),n*T_,replace = TRUE),dim = c(n,T_))
 X2_total <- array(sample(2:(q-1),n*T_,replace = TRUE),dim = c(n,T_))
-
-
-
-#M_smooth <- function(M1,M2,M3,T_){
- # Y <- array(0,dim = c(2*T_+1,p,q))
-  #svd1 <- svd(M1)
-  #svd2 <- svd(M2)
-  #svd3 <- svd(M3)
-  #for (i in (9*T_+1):(10*T_)) {
-  #  Y[i-9*T_,,] <- (svd1$u*cos((i-1)*pi/20/T_)+svd2$u*sin((i-1)*pi/20/T_))%*%diag(svd1$d*(10*T_-i+1)/10/T_ + svd2$d*(i-1)/10/T_)%*%t(svd1$v*cos((i-1)*pi/20/T_)+svd2$v*sin((i-1)*pi/20/T_))
-  #}
-  #Y[T_+1,,] <- M2
-  #for (i in 1:T_) {
-  #  Y[T_+1+i,,] <-(svd2$u*cos(i*pi/20/T_)+svd3$u*sin(i*pi/20/T_))%*%diag(svd2$d*(10*T_-i)/10/T_ + svd3$d*i/10/T_)%*%t(svd2$v*cos(i*pi/20/T_)+svd3$v*sin(i*pi/20/T_))
-  #}
-  #return(Y)
-#}
-#M_total <-  M_smooth(img_total_r[2,,],img_total_r[3,,],img_total_r[4,,],T_)
-#T_ = 20
-#M_total = M_total[(T_+1-20):(T_+1+20),,]
-L_total = array(0,dim = c(3,T_,p,q))
-S_total = array(0,dim = c(3,T_,p,q))
-foreach (i = 1:T_,.packages = c("psych","kernlab","npmr"),.verbose=TRUE) %dopar% {
-  #print(i)
-  l = rpca_func(img_total_b[i,,],0.25,0.0125)
-  write.csv(l[[1]],paste("~/pic_data/outdata/lions_blue_lowrank_",i,".csv",sep = ""))
-  write.csv(l[[2]],paste("~/pic_data/outdata/lions_blue_sparse_",i,".csv",sep = ""))
-}
-
-for (t in 1:T_) {
-  print(t)
-  m1 = matrix(0,p,q)
-  m1_data = read.csv(paste("~/pic_data/outdata/lions_red_lowrank_",t,".csv",sep = ""))[,2:855]
-  for (i in 1:p) {
-    for (j in 1:q) {
-      m1[i,j] = m1_data[i,j]
-    }
-  }
-  L_total[1,t,,] = m1
-  m2 = matrix(0,p,q)
-  m2_data = read.csv(paste("~/pic_data/outdata/lions_green_lowrank_",t,".csv",sep = ""))[,2:855]
-  for (i in 1:p) {
-    for (j in 1:q) {
-      m2[i,j] = m2_data[i,j]
-    }
-  }
-  L_total[2,t,,] = m2
-  m3 = matrix(0,p,q)
-  m3_data = read.csv(paste("~/pic_data/outdata/lions_blue_lowrank_",t,".csv",sep = ""))[,2:855]
-  for (i in 1:p) {
-    for (j in 1:q) {
-      m3[i,j] = m3_data[i,j]
-    }
-  }
-  L_total[3,t,,] = m3
-}
-for (t in 1:T_) {
-  print(t)
-  m1 = matrix(0,p,q)
-  m1_data = read.csv(paste("~/pic_data/outdata/lions_red_sparse_",t,".csv",sep = ""))[,2:855]
-  for (i in 1:p) {
-    for (j in 1:q) {
-      m1[i,j] = m1_data[i,j]
-    }
-  }
-  S_total[1,t,,] = m1
-  m2 = matrix(0,p,q)
-  m2_data = read.csv(paste("~/pic_data/outdata/lions_green_sparse_",t,".csv",sep = ""))[,2:855]
-  for (i in 1:p) {
-    for (j in 1:q) {
-      m2[i,j] = m2_data[i,j]
-    }
-  }
-  S_total[2,t,,] = m2
-  m3 = matrix(0,p,q)
-  m3_data = read.csv(paste("~/pic_data/outdata/lions_blue_sparse_",t,".csv",sep = ""))[,2:855]
-  for (i in 1:p) {
-    for (j in 1:q) {
-      m3[i,j] = m3_data[i,j]
-    }
-  }
-  S_total[3,t,,] = m3
-}
-# compressing step
 Y_total <- array(0,dim = c(3,n,T_))
 for (i in 1:T_) {
   for (j in 1:n) {
@@ -126,34 +40,9 @@ for (i in 1:T_) {
   }
 }
 
-
-# data in each epoch t 
-cs_realdata_createdata_func <- function(t,X1_total,X2_total,Y_total,T_,h,mode){
-  h_ = as.integer(h/2)
-  
-  if (t - h_ <= 1){
-    X1 <- X1_total[,1:(h_+t)]
-    X2 <- X2_total[,1:(h_+t)]
-    Y <- Y_total[mode,,1:(h_+t)]
-  }
-  if (t + h_ > T_){
-    X1 <- X1_total[,(t-h_):T_]
-    X2 <- X2_total[,(t-h_):T_]
-    Y <- Y_total[mode,,(t-h_):T_]
-  }
-  if (t - h_ > 1 & t + h_ <= T_) {
-    X1 <- X1_total[,(t-h_):(t+h_)]
-    X2 <- X2_total[,(t-h_):(t+h_)]
-    Y <- Y_total[mode,,(t-h_):(t+h_)]
-  }
-  return(list(X1,X2,Y))
-}
-
-cs_test_error_func <- function(M,N,p,q){
-  return(norm(M-N,type="F")^2/p/q)
-}
-
-
+#
+# DLR method
+#
 batch_size = as.integer(n/5)
 lambda = 0.224#2.75
 tor=0
