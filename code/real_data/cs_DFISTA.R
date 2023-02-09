@@ -1,4 +1,5 @@
 # using FISTA algorithm for compressed sensing problem
+# DLR method
 # real data example 2: compress and recover the lion video from Davis dataset 
 
 # kernel 
