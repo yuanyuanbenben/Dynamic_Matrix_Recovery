@@ -82,7 +82,7 @@ for (t in 1:T_) {
 # find the influences of rho and tau on the estimation results
 # change settings for n_t from 5000 to 30000 and T from 100 to 300 
 # combine those results mse as combine_mse and save it 
-# write.csv(combine_mse,"~/Dynamic_Matrix_Recovery/data/dmc_5000_30000.csv")
+# write.csv(combine_mse,"~/Dynamic_Matrix_Recovery/output/dmc_5000_30000.csv")
 tuning_para <- foreach(n_t = seq(5000,30000,1000),
                        .packages = c("matlab","psych","kernlab"),.combine="rbind",.verbose=TRUE) %dopar% {
   result_mse = rep(0,T_)
@@ -105,7 +105,7 @@ for (i in 1:100) {
 }
 # save
 # datas <- data.frame(datas)
-# write.csv(datas,"~/Dynamic_Matrix_Recovery/data/phase_transition_precise.csv")
+# write.csv(datas,"~/Dynamic_Matrix_Recovery/output/phase_transition_precise.csv")
 
 #
 # DLR: random initialization
@@ -142,13 +142,13 @@ foreach(t=1:T_,.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbo
   difftime(end1, begin1, units = "sec")
 }
 #save                        
-#write.csv(result_mse_Static,"~/Dynamic_Matrix_Recovery/data/baseline_120000.csv")
-#write.csv(M_estimate_Static,"~/Dynamic_Matrix_Recovery/data/baseline_120000_matrix.csv")
+#write.csv(result_mse_Static,"~/Dynamic_Matrix_Recovery/output/baseline_120000.csv")
+#write.csv(M_estimate_Static,"~/Dynamic_Matrix_Recovery/output/baseline_120000_matrix.csv")
 
 #
 # TwoStep
 #                  
-matrix_data <- read.csv("~/Dynamic_MAtrix_Recovery/data/baseline_120000_matrix.csv")[,2:301]
+matrix_data <- read.csv("~/Dynamic_MAtrix_Recovery/output/baseline_120000_matrix.csv")[,2:301]
 matrix_array <- array(0,dim = c(T_,p,q))
 for (i in 1:T_) {
   print(i)
@@ -169,7 +169,7 @@ for (t in 1:T_) {
   result_mse[t] <- compare_matrix_func(M,M_,p,q)[[1]]
   print(result_mse[t])
 }
-#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/localsmooth_120000_2.csv")                                                   
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/output/localsmooth_120000_2.csv")                                                   
                            
 #
 # Tensor
@@ -195,7 +195,7 @@ M_hat <- ADM_TR(X,Y,T_,p,q,beta = 0.1,lamda=0.3,c_beta=1,c_lamda=1,itertime = 30
 # a = c(1/3,1/3,1/3)
 # rho=10
 # M_hat <- HaLRTC(X,Y,a,T_,p,q,rho=rho,itertime = 10000)
-# write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/tensor_30000.csv")      
+# write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/output/tensor_30000.csv")      
 
                            
 #
@@ -225,6 +225,6 @@ for (i in 1:6) {
   }
 }
 #datas <- data.frame(datas)
-#write.csv(datas,"~/Dynamic_Matrix_Recovery/data/dependent_X_mc.csv")
+#write.csv(datas,"~/Dynamic_Matrix_Recovery/output/dependent_X_mc.csv")
 
 stopCluster(cl) 
