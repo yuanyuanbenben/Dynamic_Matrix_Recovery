@@ -54,3 +54,41 @@ cs_realdata_createdata_func <- function(t,X1_total,X2_total,Y_total,T_,h,mode){
 cs_test_error_func <- function(M,N,p,q){
   return(norm(M-N,type="F")^2/p/q)
 }
+
+
+construc_pic <- function(t,l,mode){
+  s = S_total[mode,t,,]
+  m = s+l
+  m[m<0]=0
+  m[m>1]=1
+  return(m)
+}
+
+construc_func <- function(t,versions){
+  if (versions == "static"){
+    m_data_red = read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_lions_red_",t,".csv",sep = ""))[,2:855]
+    m_data_green = read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_lions_green_",t,".csv",sep = ""))[,2:855]
+    m_data_blue = read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_lions_blue_",t,".csv",sep = ""))[,2:855]
+  }
+  else if (versions == "twostep"){
+    m_data_red = read.csv(paste("~/Dynamic_Matrix_Recovery/output/twostep_lions_red_",t,".csv",sep = ""))[,2:855]
+    m_data_green = read.csv(paste("~/Dynamic_Matrix_Recovery/output/twostep_lions_reen_",t,".csv",sep = ""))[,2:855]
+    m_data_blue = read.csv(paste("~/Dynamic_Matrix_Recovery/output/twostep_lions_blue_",t,".csv",sep = ""))[,2:855]
+  }
+  else {
+    m_data_red = read.csv(paste("~/Dynamic_Matrix_Recovery/output/lions_red_",t,".csv",sep = ""))[,2:855]
+    m_data_green = read.csv(paste("~/Dynamic_Matrix_Recovery/output/lions_green_",t,".csv",sep = ""))[,2:855]
+    m_data_blue = read.csv(paste("~/Dynamic_Matrix_Recovery/output/lions_blue_",t,".csv",sep = ""))[,2:855]
+  }
+  m_red = matrix(0,p,q)
+  m_green = matrix(0,p,q)
+  m_blue = matrix(0,p,q)
+  for (i in 1:p) {
+    for (j in 1:q) {
+      m_red[i,j] = m_data_red[i,j]
+      m_green[i,j] = m_data_green[i,j]
+      m_blue[i,j] = m_data_blue[i,j]
+    }
+  }
+  return(list(m_red,m_green,m_blue))
+}
