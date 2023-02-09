@@ -1,5 +1,7 @@
+# from results of Static method to TwoStep method
+# using an additional local smooth
 # input data
-matrix_data <- read.csv("~/project_dmc/final_version/datas/baseline_120000_matrix.csv")[,2:301]
+matrix_data <- read.csv("~/Dynamic_MAtrix_Recovery/datas/baseline_120000_matrix.csv")[,2:301]
 matrix_array <- array(0,dim = c(100,500,300))
 for (i in 1:100) {
   print(i)
@@ -26,6 +28,7 @@ createdata_func <- function(matrix_array,t,T_,h){
 }
 
 threshold_func <- function(x) sapply(x, function(z) max(0,z))
+
 # local smooth 
 local_lowrank_smooth <- function(matrix_array,T_,t,h,p,q,lambda){
   weight <- kernel_weight(t,h,T_)
@@ -65,5 +68,5 @@ for (t in 1:T_) {
   result_mse[t] <- compare_matrix_func(M,M_,p,q)[[1]]
   print(result_mse[t])
 }
-write.csv(result_mse,"~/project_dmc/final_version/datas/localsmooth_120000_2.csv")
-write.csv(result_mse,"~/final_version/datas/baseline_120000.csv")
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/datas/localsmooth_120000_2.csv")
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/datas/baseline_120000.csv")
