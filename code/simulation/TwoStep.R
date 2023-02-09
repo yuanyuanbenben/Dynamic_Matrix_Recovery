@@ -1,16 +1,6 @@
 # from results of Static method to TwoStep method
 # using an additional local smooth
 # input data
-matrix_data <- read.csv("~/Dynamic_MAtrix_Recovery/datas/baseline_120000_matrix.csv")[,2:301]
-matrix_array <- array(0,dim = c(100,500,300))
-for (i in 1:100) {
-  print(i)
-  for (j in 1:500) {
-    for (k in 1:300) {
-      matrix_array[i,j,k] <- matrix_data[(i-1)*500+j,k]
-    }
-  }
-}
 
 createdata_func <- function(matrix_array,t,T_,h){
   h_ = as.integer(h/2)
