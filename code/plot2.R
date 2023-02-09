@@ -2,18 +2,22 @@
 library(latex2exp)
 library(ggplot2)
 library(reshape2)
-# read data
-mse_baseline <- read.csv("~/project_dmc/final_version/datas/baseline_120000.csv")[,2]
-mse_tensor <- read.csv("~/project_dmc/final_version/datas/tensor_30000.csv")[,2]
-mse_dynamic <- read.csv("~/project_dmc/final_version/datas/dmc_5000_30000.csv")[,7]
-mse_local_baseline <- read.csv("~/project_dmc/final_version/datas/localsmooth_120000.csv")[,2]
+
+source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
+
+#
+# Figure 1
+#
+mse_baseline <- read.csv("~/Dynamic_Matrix_Recovery/output/baseline_120000.csv")[,2]
+mse_tensor <- read.csv("~/Dynamic_Matrix_Recovery/output/tensor_30000.csv")[,2]
+mse_dynamic <- read.csv("~/Dynamic_Matrix_Recovery/output/dmc_5000_30000.csv")[,7]
+mse_local_baseline <- read.csv("~/Dynamic_Matrix_Recovery/output/localsmooth_120000.csv")[,2]
 mse_data <- data.frame("t"=seq(0.01,1,0.01)*100,"benchmark1"=mse_baseline, "benchmark2" = mse_local_baseline,
                        "benchmark3"=mse_tensor, "DLRTR"=mse_dynamic)
 mydata <- melt(mse_data,id="t")
 ggplot(data = mydata,aes(x=t,y=value,group = variable,
                          color=variable))+
   geom_line(size=1)+
-  #scale_size_manual(values=c(10,10,10,10))+
   scale_colour_discrete(name="Estimator",
                         labels=c(expression(paste("Static: ",rho,"=0.8",sep="")),
                                  expression(paste("TwoStep:",rho,"=0.8",sep="")),
@@ -30,9 +34,10 @@ ggplot(data = mydata,aes(x=t,y=value,group = variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
-
 #
-mse = read.csv("~/project_dmc/final_version/datas/phase_transition.csv")
+# Figure 2 left
+#
+mse = read.csv("~/Dynamic_Matrix_Recovery/output/phase_transition.csv")
 mse_10000_300 = mse[1,seq(2,301,6)]
 mse_15000_200 = mse[2,seq(2,201,4)]
 mse_30000_100 = mse[3,seq(2,101,2)]
@@ -88,8 +93,35 @@ ggplot(data = mydata,aes(x=t,y=value,group = variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
-# 
-mse_dependent <- read.csv("~/project_dmc/final_version/datas/dependent_mc.csv")[,2:67]
+#
+# Figure 2 right
+#
+mse_precise <- read.csv("~/Dynamic_Matrix_Recovery/output/phase_transition_precise.csv")[,2:27]
+plot_result <- rep(0,26)
+for (i in 1:26) {
+  plot_result[i] <- mean(mse_precise[30:70,i])
+}
+index <- seq(1/3,2,1/15)*100/10
+mydata = data.frame(index=log(index),mse=log(plot_result))
+model <- lm(mse~index,data = mydata[1:11,])
+ggplot(data = mydata[1:11,],aes(x=index,y=mse))+
+  geom_point(size=1.5)+
+  geom_abline(slope=-0.82587,intercept = -0.34902,linetype=3)+
+  scale_x_continuous(name=TeX("$\\log \\frac{\\rho}{\\tau}$"),limits = c(1,2.5),breaks=seq(1,2.5,0.5))+
+  scale_y_continuous(name="Log of Average Mean Square Error",limits=c(-2.5,-1),breaks = seq(-2.5,-1,0.5))+
+  theme( panel.grid.minor = element_blank(),legend.position = c(.85,.9),
+         legend.box.background = element_rect(color="black"), 
+         axis.title.x=element_text(size=18),
+        axis.title.y=element_text(size=18),
+        axis.text.x=element_text(size=18),
+        axis.text.y=element_text(size=18),
+        legend.title =element_text(size=18),
+        legend.text = element_text(size=18))
+
+#
+# Figure 3 left
+#
+mse_dependent <- read.csv("~/Dynamic_Matrix_Recovery/output/dependent_mc.csv")[,2:67]
 mse_beta_0 <- mse_dependent[,23]
 mse_beta_0.3 <- mse_dependent[,26]
 mse_beta_0.6 <- mse_dependent[,29]
@@ -124,6 +156,9 @@ ggplot(data = mydata,aes(x=t,y=value,group = variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
+#
+# Figure 3 right 
+#
 dependent_xi_1 <- rep(0,9)
 dependent_xi_2 <- rep(0,9)
 dependent_xi_3 <- rep(0,9)
@@ -167,9 +202,10 @@ ggplot(data = mydata,aes(x=phi,y=value,group = variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
-
-# 
-mse_X_dependent <- read.csv("~/project_dmc/final_version/datas/dependent_X_mc.csv")[,2:67]
+#
+# Figure 4 left
+#
+mse_X_dependent <- read.csv("~/Dynamic_Matrix_Recovery/output/dependent_X_mc.csv")[,2:67]
 mse_X_beta_0 <- mse_X_dependent[,33]
 mse_X_beta_0.3 <- mse_X_dependent[,30]
 mse_X_beta_0.6 <- mse_X_dependent[,27]
@@ -204,6 +240,9 @@ ggplot(data = mydata,aes(x=t,y=value,group = variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
+# 
+# Figure 4 right
+#
 dependent_X_1 <- rep(0,9)
 dependent_X_2 <- rep(0,9)
 dependent_X_3 <- rep(0,9)
@@ -243,47 +282,25 @@ ggplot(data = mydata,aes(x=phi,y=value,group = variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
-#
-mse_precise <- read.csv("~/project_dmc/final_version/datas/phase_transition_precise.csv")[,2:27]
-plot_result <- rep(0,26)
-for (i in 1:26) {
-  plot_result[i] <- mean(mse_precise[30:70,i])
-}
-index <- seq(1/3,2,1/15)*100/10
-mydata = data.frame(index=log(index),mse=log(plot_result))
-model <- lm(mse~index,data = mydata[1:11,])
-ggplot(data = mydata[1:11,],aes(x=index,y=mse))+
-  geom_point(size=1.5)+
-  geom_abline(slope=-0.82587,intercept = -0.34902,linetype=3)+
-  scale_x_continuous(name=TeX("$\\log \\frac{\\rho}{\\tau}$"),limits = c(1,2.5),breaks=seq(1,2.5,0.5))+
-  scale_y_continuous(name="Log of Average Mean Square Error",limits=c(-2.5,-1),breaks = seq(-2.5,-1,0.5))+
-  theme( panel.grid.minor = element_blank(),legend.position = c(.85,.9),
-         legend.box.background = element_rect(color="black"), 
-         axis.title.x=element_text(size=18),
-        axis.title.y=element_text(size=18),
-        axis.text.x=element_text(size=18),
-        axis.text.y=element_text(size=18),
-        legend.title =element_text(size=18),
-        legend.text = element_text(size=18))
-
-
 # 
+# Figure5
+#
 origin = "1999-12-30"
 finish = "2005-12-18"
 finish_ = "2006-3-01"
-T_=100
+T_ = 100
 mse_total = matrix(0,T_,101)
 for (i in 1:T_) {
-  mse_total[i,] <- read.csv(paste("~/project_dmc/final_version/datas/mse_",i,".csv",sep = ""))[1:101,2]
+  mse_total[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/mse_",i,".csv",sep = ""))[1:101,2]
 }
 mse_baseline = matrix(0,T_,101)
 for (i in 1:T_) {
-  mse_baseline[i,] <- read.csv(paste("~/project_dmc/final_version/datas/baseline_mse_",i,".csv",sep = ""))[1:101,2]
+  mse_baseline[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_mse_",i,".csv",sep = ""))[1:101,2]
 }
 mse_netflix = mse_total[,73]
 mse_netflix_baseline = mse_baseline[,73]
-mse_netflix_twostep = read.csv("~/project_dmc/final_version/datas/baseline_mse_twostep")[,2]
-mse_netflix_tensor = read.csv("~/project_dmc/final_version/datas/baseline_mse_tensor")[,2]
+mse_netflix_twostep = read.csv("~/Dynamic_Matrix_Recovery/output/baseline_mse_twostep")[,2]
+mse_netflix_tensor = read.csv("~/Dynamic_Matrix_Recovery/output/baseline_mse_tensor")[,2]
 mse_data <- data.frame("t"=seq.Date(as.Date(origin),as.Date(finish),by=22),"Static"=mse_netflix_baseline,"TwoStep"=mse_netflix_twostep,
                        "Tensor"=mse_netflix_tensor,"DLRTR"=mse_netflix)
 mydata <- melt(mse_data,id="t")
@@ -303,5 +320,22 @@ ggplot(data = mydata,aes(x=t,y=value,group=variable,
         legend.title =element_text(size=18),
         legend.text = element_text(size=18))
 
+#
+# Figure 6
+#
+par(mar=c(0,1,0,1))
+img <- array(0,dim = c(480,854,3))
 
+t = 5 # 25, 45, 65, 85
+versions = "static" # "twostep", "DLR"
+pic_list <- construc_func(t,versions)
+
+img[,,1] <- pic_list[[1]]
+img[,,2] <- pic_list[[2]]
+img[,,3] <- pic_list[[3]]
+longImage<-melt(img)
+rgbImage<-reshape(longImage,timevar='Var3',idvar=c('Var1','Var2'),direction='wide')
+rgbImage$Var1<- -rgbImage$Var1
+colorColumns<- rgbImage[, substr(colnames(rgbImage), 1, 5)== "value"]
+with(rgbImage,plot(Var2, Var1, col = rgb(colorColumns), asp = 1, pch =".",axes=F,xlab='',ylab=''))
 
