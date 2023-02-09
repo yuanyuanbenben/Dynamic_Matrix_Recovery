@@ -1,7 +1,6 @@
 # using FISTA algorithm
 
-
-# object function
+# compute M{x1,x2]
 inner_pro_func_M <- function(X1,X2,M,len,n_t,sto=FALSE,minibatch=FALSE,batch_size=FALSE){
   # X T*n_t*p*q
   # M p*q
@@ -90,7 +89,7 @@ FISTA_func <- function(X1,X2,Y,T_,t_,h,p,q,lambda,itertime=3000,sto=FALSE,
   n_t = dim(X1)[2]
   weight_mat <- diag(kernel_weight(t_,h,T_))
   L <- Lipschitz_func(X1,X2,len,n_t,weight_mat,p,q)
-  print(L)
+  #print(L)
   t = 1
   if (init){
     M = matrix(rnorm(p*q),p,q)
