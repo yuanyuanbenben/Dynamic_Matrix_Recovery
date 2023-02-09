@@ -12,8 +12,8 @@ library(foreach)
 library(doParallel)
 
 # help functions
-source("~/Dynamic_Matrix_Recovery/code/simulation/large_FISTA.R")
-source("~/Dynamic_Matrix_Recovery/code/simulation/large_baseline_FISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
+source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 
 # paralle computing settings
@@ -147,14 +147,55 @@ foreach(t=1:T_,.packages = c("matlab","psych","kernlab"),.combine="rbind",.verbo
 
 #
 # TwoStep
-# 
-
-                           
-                           
+#                  
+matrix_data <- read.csv("~/Dynamic_MAtrix_Recovery/data/baseline_120000_matrix.csv")[,2:301]
+matrix_array <- array(0,dim = c(T_,p,q))
+for (i in 1:T_) {
+  print(i)
+  for (j in 1:p) {
+    for (k in 1:q) {
+      matrix_array[i,j,k] <- matrix_data[(i-1)*p+j,k]
+    }
+  }
+}
+result_mse <- rep(0,T_)
+h=24
+lambda = 1
+for (t in 1:T_) {
+  M_in <- createdata_func(matrix_array,t,T_,h)
+  M <- local_smooth(M_in,T_,t,h,p,q,lambda = lambda)
+  M_ =  (cos(pi*t/2/T_)*U_0 + sin(pi*t/2/T_)*U_1)%*%(D_1 + 
+                                                       t/T_*D_0)%*%t(cos(pi*t/2/T_)*V_0 + sin(pi*t/2/T_)*V_1)
+  result_mse[t] <- compare_matrix_func(M,M_,p,q)[[1]]
+  print(result_mse[t])
+}
+#write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/localsmooth_120000_2.csv")                                                   
                            
 #
 # Tensor
 #
+M <- array(0,dim = c(T_,p,q))
+for (j in 1:T_) {
+  M[j,,]<- (cos(pi*j/2/T_)*U_0 + sin(pi*j/2/T_)*U_1)%*%(D_1 + 
+                                                          j/T_*D_0)%*%t(cos(pi*j/2/T_)*V_0 + sin(pi*j/2/T_)*V_1)
+}
+
+X <- array(FALSE,dim = c(T_,p,q))
+Y <- array(0,dim = c(T_,p,q))
+for (j in 1:T_) {
+  index1 <- sample(1:p,n_t,replace = TRUE)
+  index2 <- sample(1:q,n_t,replace = TRUE)
+  for (i in 1:n_t) {
+    X[j,index1[i],index2[i]] <- TRUE
+    Y[j,index1[i],index2[i]] <- M[j,index1[i],index2[i]] + rnorm(1,sd=1)
+  }
+}
+
+M_hat <- ADM_TR(X,Y,T_,p,q,beta = 0.1,lamda=0.3,c_beta=1,c_lamda=1,itertime = 3000)
+# a = c(1/3,1/3,1/3)
+# rho=10
+# M_hat <- HaLRTC(X,Y,a,T_,p,q,rho=rho,itertime = 10000)
+# write.csv(result_mse,"~/Dynamic_MAtrix_Recovery/data/tensor_30000.csv")      
 
                            
 #
