@@ -1,5 +1,3 @@
-Please replace the contents of this file with relevant instructions for your repository or remove this file entirely.
+All R codes used in "*Dynamic Matrix Recovery*" are in this dictionary.
 
-This directory would generally contain source code files that contain the core code to implement the method and various utility/auxiliary functions.
-
-Scripts/code files that execute the overall workflow to carry out an analysis and generate results for the manuscript might be placed in the main directory.
+This dictionary has two folders. The folder "**simulation**" contains codes used for "*Section 4: Simulation Studies*", in which the file "**DFISTA.R**" and "**baseline_FISTA**" implement the optimal algorithm used in for methods presented in article.
