@@ -380,7 +380,10 @@ fold_tensor <- function(X,mode,shape){
   }
 }
 
-
+mean_time_mse <- function(M,M_hat,T_,p,q){
+  return(sum((M-M_hat)*(M-M_hat))/T_/p/q)
+}
+                                     
 ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100){
   # initial
   Z = Y
