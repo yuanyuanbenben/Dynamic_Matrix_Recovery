@@ -16,7 +16,7 @@ source("~/Dynamic_Matrix_Recovery/code/simulation/DFISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/baseline_FISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/simulation/help_functions.R")
 source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
-load("~/Dynamic_Matrix_Recovery/code/real_data/netflixdata.RData")
+load("~/Dynamic_Matrix_Recovery/data/netflixdata.RData")
 
 # paraller computing settings
 cl.cores = detectCores(logical = F)
