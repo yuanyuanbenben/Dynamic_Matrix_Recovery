@@ -1,8 +1,8 @@
 ## Code Part
 
-All R codes used in "*Dynamic Matrix Recovery*" are in this dictionary.
+All R codes used in "*Dynamic Matrix Recovery*" are in this directory.
 
-Files in this dictionary implement the following functions. 
+Files in this directory implement the following functions. 
 - The folder "**simulation**" contains codes used for "*Section 4: Simulation Studies*"
     - The files "**DFISTA.R**" and "**baseline_FISTA.R**" implement the optimal algorithm used for methods presented in article under the dynamic matrix completion setting.
     - The file "**simulations.R**" presents simulations including the performance compared to benchmarks, the effect of sample size and number of time points and the dependence across time for corvariance and noise.
