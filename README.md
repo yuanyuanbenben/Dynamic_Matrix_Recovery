@@ -95,3 +95,11 @@
     </ul>
 </details>
 
+### Workflows
+
+#### Simulation 1 and 2
+
+1. Open the floder *Dynamic_Matrix_Recovery/code/simulation/*.
+2. Make sure that the R scripts ***DFISTA.R***, ***baseline_FISTA.R***, ***help_functions.R*** are available in the path *~/Dynamic_Matrix_Recovery/code/simulation/...*. Or revise the path in ***simulations.R*** line 15-17 to match the path of those three R scripts.
+3. In the R scripts ***simulations.R***, independent case and dependent case simulations are performed. Run corresponding codes of different methods including our DLR method and three benchmarks Static, TwoStep and Tensor can obtain corresponding results. Parameters including the dimension of matrix, number of time points and sample size can easily changed if needed. All code that stores output is commented out to avoid overwriting existing output.
+4. For *Figure 1-3*, return to the previous directory and run the corresponding part in ***plot.R***.
