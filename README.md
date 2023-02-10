@@ -2,7 +2,30 @@
 
 ### Overview
 
-- Directory ***Code*** contains all codes used in the simulation experiments and real data examples 
+<details>
+    <summary>Directory <strong><em>Code</em></strong> contains all codes used in the simulation experiments and real data examples </summary>
+    <ul>
+        <li>The folder <strong><em>simulation</em></strong> contains codes used for "<em>Section 4: Simulation Studies</em>"
+        <ul>
+            <li>"<strong><em>DFISTA.R</em></strong>" and "<strong><em>baseline_FISTA.R</em></strong>": functions to implement the optimal algorithm used for methods presented in article under the dynamic matrix completion setting.</li>
+            <li> "<strong><em>simulations.R</em></strong>": functions to present simulations including the performance compared to benchmarks, the effect of sample size and number of time points and the dependence across time for corvariance and noise.</li>
+            <li> "<strong><em>help_functions.R</em></strong>": some auxiliary functions for above implement.</li>
+        </ul>
+        </li>
+        <li> The folder <strong><em>real_data</em></strong> contains codes used for "<em>Section 5: Real Data Examples</em>"
+        <ul>
+            <li>"<strong><em>realdata1_preprocess.R</em></strong>" and "<strong><em>realdata2_preprocess.R</em></strong>": functions for the curation and preparation process of the two real dataset.</li>
+            <li>"<strong><em>realdata1_test.R</em></strong>" and "<strong><em>realdata2_test.R</em></strong>": functions to implement DLR methods and benchmarks in the two real dataset.</li>
+            <li>"<strong><em>cs_DFISTA.R</em></strong>" and "<strong><em>cs_baseline_FISTA.R</em></strong>": functions to implement the optimal algorithm used for methods presented in article under the dynamic compressed sensing setting.</li>
+            <li>"<strong><em>robust_pca.R</em></strong>": functions used for the preprocess of the vedio example which seperates a matrix into a low rank and a sparse part.</li>
+            <li> "<strong><em>help_functions.R</em></strong>": some auxiliary functions for above implement.</li>
+        </ul>
+        </li>
+        <li>"<strong><em>plot.R</em></strong>": functions to collect results in simulations and real data examples and draw the pictures used in the article.</li>
+    </ul>
+</details>
+
+
 
 
 <details>
