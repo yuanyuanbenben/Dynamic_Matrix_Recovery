@@ -140,9 +140,9 @@
 3. Download the ***0000.jpg*** to ***0095.jpg*** in the directory *~/Dynamic_Matrix_recovery/data/lions*(Or download the dataset [here](https://davischallenge.org/davis2017/code.html#unsupervised)). Run the R script ***realdata2_preprocess.R*** to preprocess the dataset. Another alternative is directly using the environment ***vedio_data.RData*** in the directory *Dynamic_Matrix_Recovery/data/*.
 4. Run the R script ***realdata2_test.R***, in which the DLR method and benchmarks can be applied to the dataset and codes that stores output is commented out to avoid overwriting existing output.
 5. For *Figure 6*, return to the previous directory and run the corresponding part in ***plot.R***.
+-->
 
- -->
- 
+
 <details>
     <summary><strong>Real data example 2: the lion video in Davis 2017 dataset</strong></summary>
     <ol>
