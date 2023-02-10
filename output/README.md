@@ -1,6 +1,6 @@
 ## Output Part
 
-All simulation experiments and real data examples output and results are saved in this dictionary.
+All simulation experiments and real data examples output and results are saved in this directory.
 
 
 <details>
