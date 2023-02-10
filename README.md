@@ -100,6 +100,17 @@
 #### Simulation 1 and 2
 
 1. Open the floder *Dynamic_Matrix_Recovery/code/simulation/*.
-2. Make sure that the R scripts ***DFISTA.R***, ***baseline_FISTA.R***, ***help_functions.R*** are available in the path *~/Dynamic_Matrix_Recovery/code/simulation/...*. Or revise the path in ***simulations.R*** line 15-17 to match the path of those three R scripts.
-3. In the R scripts ***simulations.R***, independent case and dependent case simulations are performed. Run corresponding codes of different methods including our DLR method and three benchmarks Static, TwoStep and Tensor can obtain corresponding results. Parameters including the dimension of matrix, number of time points and sample size can easily changed if needed. All code that stores output is commented out to avoid overwriting existing output.
-4. For *Figure 1-3*, return to the previous directory and run the corresponding part in ***plot.R***.
+2. Make sure that the R scripts ***DFISTA.R***, ***baseline_FISTA.R*** and ***help_functions.R*** are available in the path *~/Dynamic_Matrix_Recovery/code/simulation/...*. Or revise the path in ***simulations.R*** line 15-17 to match the path of those three R scripts.
+3. In the R scripts ***simulations.R***, independent case and dependent case simulations are performed. Running corresponding codes of different methods including our DLR method and three benchmarks Static, TwoStep and Tensor can obtain corresponding results. Parameters including the dimension of matrix, number of time points and sample size can easily changed if needed. All codes that stores output is commented out to avoid overwriting existing output.
+4. For *Figure 1-4*, return to the previous directory and run the corresponding part in ***plot.R***.
+
+#### Real data example 1: [the netflix dataset](https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data) 
+
+1. open the floder *Dynamic_Matrix_Recovery/code/real_data/*.
+2. Make sure the R scripts ***DFISTA.R***, ***baseline_FISTA.R*** and ***help_functions.R*** are available in the path *~/Dynamic_Matrix_Recovery/code/simulation/...* and the R script ***help_functions.R*** is available in the path *~/Dynamic_Matrix_Recovery/code/real_data/...*. Or revise the path in ***realdata1_test.R*** line 15-18 to match the path of those three R scripts.
+3. Download the ***netflix_data.zip*** in the directory *~/Dynamic_Matrix_recovery/data/*, unzip it and save it as *~/Dynamic_Matrix_recovery/data/netflix_data.csv*. Run the R script ***realdata1_preprocess.R*** to preprocess the dataset. Another alternative is directly using the environment ***netflix_data.RData*** in the directory *Dynamic_Matrix_Recovery/data/*.
+4. Run the R script ***realdata1_test.R***, in which the DLR method and benchmarks can be applied to the dataset and codes that stores output is commented out to avoid overwriting existing output. 
+5. For *Figure 5*, return to the previous directory and run the corresponding part in ***plot.R***.
+
+
+#### Real data example 2: [the lion video in Davis 2017 dataset](https://davischallenge.org/davis2017/code.html#unsupervised)
