@@ -17,8 +17,8 @@ All simulation experiments and real data examples output and results are saved i
      </li>
   <li><strong>dependent case</strong>
      <ul>
-         <li> </li>
-         <li> </li>
+         <li>"<strong><em>dependent_mc.csv</em></strong>": the output MSE of simulation2 under the setting that noise is dependent while covariance X is independent.</li>
+         <li>"<strong><em>dependent_X_mc.csv</em></strong>": the output MSE of simulation2 under the setting that covariance X is dependent while noise is independent.</li>
      </ul>
      </li>
  </ul>
