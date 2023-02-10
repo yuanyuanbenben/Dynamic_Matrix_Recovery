@@ -1,3 +1,3 @@
-## Materials for Dynamic MAtrix Recovery
+## Materials for Dynamic Matrix Recovery
 
 ### Overview
