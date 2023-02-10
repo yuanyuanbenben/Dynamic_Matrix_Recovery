@@ -8,7 +8,7 @@
 <details>
     <summary>Directory <strong><em>Output</em></strong> contains the results and outputs of those simulation experiments and real data examples</summary>
     <ul>
-        <li><strong>Simulation</strong></li>
+        <li><strong>Simulation</strong>
         <ul>
             <li><strong>independent case</strong>
             <ul>
@@ -26,7 +26,8 @@
             </ul>
             </li>
         </ul>
-        <li><strong>Real data example</strong></li>
+        </li>
+        <li><strong>Real data example</strong>
         <ul>
             <li><strong>Netflix dataset</strong>
             <ul>
@@ -43,6 +44,7 @@
             </ul>
             </li>
         </ul>
+        </li>
     </ul>
 </details>
 
