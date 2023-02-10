@@ -88,4 +88,4 @@ for (t in 1:T_) {
   S_total[3,t,,] = m3
 }
 
-save.image("~/Dynamic_Matrix_Recovery/code/real_data/vedio_data.RData")
+save.image("~/Dynamic_Matrix_Recovery/data/video_data.RData")
