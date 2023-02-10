@@ -1,5 +1,14 @@
-Please replace the contents of this file with relevant instructions for your repository or remove this file entirely.
+## Output Part
 
-This directory would generally contain results of simulations or real data analyses. Also, intermediate output files might be placed here, cached to avoid having to rerun computationally-intensive steps of the workflow. 
+All simulation experiments and real data examples output and results are saved in this dictionary.
+
+- **Simulation**
+    - **independent case**
+        -"***dmc_5000_30000.csv***": the output MSE of simulation 1 using our proposed DLR method with $T=100$ and sample size from 5000 to 30000.
+        -"***baseline_120000.csv***": the output MSE of simulation 1 using Static benchmark with $T=100$ and sample size 120000.
+    - **dependent case**
+- **Real data example**
+    - **Netflix dataset**
+    - **Davis 2016 lions video**
 
 
