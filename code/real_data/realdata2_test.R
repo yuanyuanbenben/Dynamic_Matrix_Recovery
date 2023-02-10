@@ -14,7 +14,7 @@ source("~/Dynamic_Matrix_Recovery/code/real_data/cs_DFISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/real_data/cs_baseline_FISTA.R")
 source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
 source("~/Dynamic_Matrix_Recovery/code/real_data/robust_pca.R")
-load("~/Dynamic_Matrix_Recovery/code/real_data/vedio_data.RData")
+load("~/Dynamic_Matrix_Recovery/data/video_data.RData")
 
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(21)
