@@ -3,3 +3,4 @@ README.md filter=lfs diff=lfs merge=lfs -text
 code filter=lfs diff=lfs merge=lfs -text
 manuscript filter=lfs diff=lfs merge=lfs -text
 output filter=lfs diff=lfs merge=lfs -text
+*.RData filter=lfs diff=lfs merge=lfs -text
