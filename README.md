@@ -123,16 +123,7 @@
 
  -->
  
- <details>
-    <summary><strong>Real data example 1: the netflix dataset</strong></summary>
-    <ol>
-        <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/</em>.</li>
-        <li>Make sure the R scripts <strong><em>DFISTA.R</em></strong>, <strong><em>baseline_FISTA.R</em></strong> and <strong><em>help_functions.R</em></strong> are available in the path <em>~/Dynamic_Matrix_Recovery/code/simulation/...</em> and the R script <strong><em>help_functions.R</em></strong> is available in the path <em>~/Dynamic_Matrix_Recovery/code/real_data/...</em>. Or revise the path in <strong><em>realdata1_test.R</em></strong> line 15-18 to match the path of those four R scripts.</li>
-        <li>Download the <strong><em>netflix_data.zip</em></strong> in the directory <em>~/Dynamic_Matrix_recovery/data/</em>, unzip it and save it as <em>~/Dynamic_Matrix_recovery/data/netflix_data.csv</em>(or download the dataset <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">here</a>). Run the R script <strong><em>realdata1_preprocess.R</em></strong> to preprocess the dataset. Another alternative is directly using the environment <strong><em>netflix_data.RData</em></strong> in the directory <em>Dynamic_Matrix_Recovery/data/</em>.</li>
-        <li> Run the R script <strong><em>realdata1_test.R</em></strong>, in which the DLR method and benchmarks can be applied to the dataset and codes that stores output is commented out to avoid overwriting existing output.</li>
-        <li>For <em>Figure 5</em>, return to the previous directory and run the corresponding part in <strong><em>plot.R</em></strong>.</li>
-    </ol>
-</details>
+
 <!-- #### Real data example 2: the lion video in Davis 2017 dataset
 
 1. Open the floder *Dynamic_Matrix_Recovery/code/real_data/*.
