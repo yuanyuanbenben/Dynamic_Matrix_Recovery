@@ -8,4 +8,8 @@ where $n_t$ is the sample size, $m_1,m_2$ are the dimension of matrix and $T$ is
 - "***phase_transition.png***": The $\text{MSE}_t$ of DLR estimates under different settings of sample size $n_t$ and number of time point $T$, which corresponds to *Figure 2 left* in the main context.
 - "***precise_nt.png***": The relationship between the logarithm of $\text{AMSE}$ and the logarithm of $\rho/\tau$ show a linear trend with slope $-4/5$, which corresponds to *Figure 2 right* in the main context.
 - "***dependent_xi.png***": Under the dependent noise case, the influence of different noise variances and dependent coefficients $\beta$ to $\text{MSE}_t$, which corresponds to *Figure 3 left* in the main context.
-- "***dependent_whit_phiy.png***": The relationship between $\text{AMSE}$ and 
+- "***dependent_whit_phiy.png***": The relationship between $\text{AMSE}$ and the mixing coefficient of noise $\xi$, which corresponds to *Figure 3 right* in the main context.
+- "***dependent_X.png***": Under the dependent noise case, the influence of different noise variances and dependent coefficients $\alpha$ to $\text{MSE}_t$, which corresponds to *Figure 4 left* in the main context.
+- "***dependent_whit_phix.png***": The relationship between $\text{AMSE}$ and the mixing coefficient of covariance matrix $X$, which corresponds to *Figure 4 right" in the main context.
+- "*** netflix_data.png***": The $\text{MSE}_t$ at differnet time points for DLR and three benchmarks, which corresponds to *Figure 5* in the main context.
+- "***real_lions_5(25,45,65,85).png***, ***lions_5(25,45,65,85).png***,***baseline_lions_5(25,45,65,85).png***,***twostep_lions_5(25,45,65,85).png***": The original, DLR estimated, Static estimated and TwoStep estimated frames in the lions video, which correspond to *Figure 6* in the main context.
