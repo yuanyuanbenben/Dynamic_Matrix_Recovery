@@ -129,7 +129,7 @@ if (method == 'DLR'){
     print(paste('test mse for t =', t,'is',result_mse[t]))
   }
   if (save_mode == 'Save'){
-    write.csv(result_mse,paste("real_data/output/netflix_mse_sample_",link,".csv",sep=""))
+    write.csv(result_mse,paste("output/netflix_mse_sample_",link,".csv",sep=""))
   }
   end <- Sys.time()
   print(difftime(end, begin, units = "sec"))
