@@ -11,6 +11,8 @@ library(foreach)
 library(doParallel)
 library(npmr)
 
+setwd("/your dictionary/Dynamic_Matrix_Recovery")
+
 # input
 args = commandArgs(trailingOnly = TRUE)
 if (length(args) == 0){
@@ -61,18 +63,18 @@ if (! save_mode %in% c('NoSave','Save')){
 }
 
 # help functions
-setwd("/home/yuanyuanbenben/project_dmc/dmr_github/Dynamic_Matrix_Recovery-main/code")
+
 if (link == 'NoLink'){
-  source("real_data/netflix_data/netflix_DFISTA.R")
+  source("code/real_data/netflix_data/netflix_DFISTA.R")
 } else{
   if (link == 'Link'){
-    source("real_data/netflix_data/netflix_DFISTA_link.R")
+    source("code/real_data/netflix_data/netflix_DFISTA_link.R")
   }
 }
-source("real_data/netflix_data/netflix_baseline_FISTA.R")
-source("simulation/help_functions.R")
-source("real_data/help_functions.R")
-load("real_data/netflix_data/netflixdata.RData")
+source("code/real_data/netflix_data/netflix_baseline_FISTA.R")
+source("code/simulation/help_functions.R")
+source("code/real_data/help_functions.R")
+load("output/netflixdata.RData")
 
 # parallel computing settings
 if (method %in% c('Static','TwoStep')){
@@ -99,7 +101,6 @@ if (method == 'DLR'){
   if (link == 'NoLink'){
      h = 42
      #lambda = 11.1
-    #h = 42 
     lambda = 1.5
   }
   if (link == 'Link'){
@@ -123,13 +124,12 @@ if (method == 'DLR'){
       }
     }
     M_input <- FISTA_func(X1,X2,Y,T_,t,h,p,q,lambda,itertime=1000,sto=TRUE,batch_size=batch_size,init=FALSE,M_input=M_in,tor=tor)
-    # write.csv(M_input,paste("real_data/output/matrix_",t,".csv",sep=""))
     # test error 
     result_mse[t] <- test_error_func(M_input,test_X1_total[[t]],test_X2_total[[t]],test_Y_total[[t]])
     print(paste('test mse for t =', t,'is',result_mse[t]))
   }
   if (save_mode == 'Save'){
-    write.csv(result_mse,paste("real_data/output/netflix_mse_sample_",link,"_2_.csv",sep=""))
+    write.csv(result_mse,paste("real_data/output/netflix_mse_sample_",link,".csv",sep=""))
   }
   end <- Sys.time()
   print(difftime(end, begin, units = "sec"))
@@ -139,7 +139,7 @@ if (method == 'DLR'){
 #
 if (method=='Static'){
   if (link == 'NoLink'){
-    lambda = 15/2 # 5.5
+    lambda =  5.5 # 15/2
   }
   if (link == 'Link'){
     lambda = 21/2
@@ -157,7 +157,7 @@ if (method=='Static'){
     M_inputs <- base_FISTA_func(X1,X2,Y,T_,t,h,p,q,lambda,itertime=5000,sto=TRUE,
                         batch_size=batch_size,init=FALSE,M_input=M_input,tor=tor)
     if (save_mode == 'Save'){
-      write.csv(M_inputs,paste("real_data/output/baseline_matrix_",t,"_2_.csv",sep=""))
+      write.csv(M_inputs,paste("output/baseline_matrix_",t,".csv",sep=""))
     }
     # test error 
     result_mse[t] <- test_error_func(M_input,test_X1_total[[t]],test_X2_total[[t]],test_Y_total[[t]])
@@ -166,10 +166,10 @@ if (method=='Static'){
   if (save_mode == 'Save'){
     saved_mse = rep(0,T_)
     for (t in 1:T_){
-      M_hat <- read.csv(paste("real_data/output/baseline_matrix_",t,"_2_.csv",sep=""))[,2:(q+1)]
+      M_hat <- read.csv(paste("output/baseline_matrix_",t,".csv",sep=""))[,2:(q+1)]
       saved_mse[t] = test_error_func(M_hat,test_X1_total[[t]],test_X2_total[[t]],test_Y_total[[t]])
     }
-    write.csv(saved_mse,"real_data/output/baseline_mse_2.csv")
+    write.csv(saved_mse,"output/baseline_mse.csv")
   }
   end <- Sys.time()
   print(difftime(end, begin, units = "sec"))
@@ -183,7 +183,7 @@ if (method == 'TwoStep'){
     array_ = matrix(0,p,q)
     if (t > h & t <= T_ - h){
       for (s in (t-h):(t+h)){
-        a <- read.csv(paste("real_data/output/baseline_matrix_",s,".csv",sep=""))[,2:(q+1)]
+        a <- read.csv(paste("output/baseline_matrix_",s,".csv",sep=""))[,2:(q+1)]
         for (j in 1:p){
           for (k in 1:q){
             array_[j,k] = array_[j,k] + a[[k]][j]
@@ -194,7 +194,7 @@ if (method == 'TwoStep'){
     }
     if (t > T_ - h){
       for (s in (t-h):T_){
-        a <- read.csv(paste("real_data/output/baseline_matrix_",s,".csv",sep=""))[,2:(q+1)]
+        a <- read.csv(paste("output/baseline_matrix_",s,".csv",sep=""))[,2:(q+1)]
         for (j in 1:p){
           for (k in 1:q){
             array_[j,k] = array_[j,k] + a[[k]][j]
@@ -205,7 +205,7 @@ if (method == 'TwoStep'){
     }
     if (t <= h){
       for (s in 1:(t+h)){
-        a <- read.csv(paste("real_data/output/baseline_matrix_",s,".csv",sep=""))[,2:(q+1)]
+        a <- read.csv(paste("output/baseline_matrix_",s,".csv",sep=""))[,2:(q+1)]
         for (j in 1:p){
           for (k in 1:q){
             array_[j,k] = array_[j,k] + a[[k]][j]
@@ -220,7 +220,7 @@ if (method == 'TwoStep'){
   }
   print(mse_ret)
   if (save_mode == 'Save'){
-    write.csv(mse_ret,"real_data/twostep_mse.csv")
+    write.csv(mse_ret,"output/twostep_mse.csv")
   }
 }
 #
@@ -256,13 +256,13 @@ if (method=='Tensor'){
   print(difftime(end, begin, units = "sec"))
   if (save_mode == 'Save'){
     for (t in 1:T_){
-      write.csv(Y_tensor_hat[t,,],paste("real_data/output/tensor_",t,".csv",sep = ""))
+      write.csv(Y_tensor_hat[t,,],paste("output/tensor_",t,".csv",sep = ""))
     }
   }
   mse = rep(0,T_)
   for (t in 1:T_){
     print(t)
-    a = read.csv(paste("real_data/output/tensor_",t,".csv",sep=""))[,2:(q+1)]
+    a = read.csv(paste("output/tensor_",t,".csv",sep=""))[,2:(q+1)]
     Y_tensor_test_hat <- a[X_tensor_test[t,,]]
     Y_test = Y_tensor_test[t,,]
     Y_test = Y_test[X_tensor_test[t,,]]
@@ -270,7 +270,7 @@ if (method=='Tensor'){
     print(mse[t])
   }
   if (save_mode == 'Save'){
-    write.csv(mse,"real_data/output/baseline_mse_tensor.csv")
+    write.csv(mse,"output/baseline_mse_tensor.csv")
   }
 }
 
@@ -346,7 +346,6 @@ if (method=='Tensor'){
 #      # }
 #       loss
 #     }
-#     write.csv(loss,paste("~/final_version/datas/cv_",h,"_",lambda,".csv",sep = ""))
 # }
 if (method %in% c('Static','TwoStep')){
   stopCluster(cl) 
