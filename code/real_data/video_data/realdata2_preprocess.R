@@ -4,7 +4,7 @@ library(reshape2)
 library(foreach)
 library(doParallel)
 
-setwd('/home/yuanyuanbenben/project_dmc/dmr_github/Dynamic_Matrix_Recovery-main')
+setwd('/your dictionary/Dynamic_Matrix_Recovery')
 
 source("code/real_data/video_data/robust_pca.R")
 
@@ -119,4 +119,4 @@ for (t in 1:T_) {
   S_total[3,t,,] = m3
 }
 
-save.image("code/real_data/video_data/lions_video.RData")
+save.image("data/lions_video.RData")
