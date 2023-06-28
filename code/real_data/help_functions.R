@@ -66,19 +66,19 @@ construc_pic <- function(t,l,mode,S_total){
 
 construc_func <- function(t,versions){
   if (versions == "static"){
-    m_data_red = read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_lions_red_",t,".csv",sep = ""))[,2:855]
-    m_data_green = read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_lions_green_",t,".csv",sep = ""))[,2:855]
-    m_data_blue = read.csv(paste("~/Dynamic_Matrix_Recovery/output/baseline_lions_blue_",t,".csv",sep = ""))[,2:855]
+    m_data_red = read.csv(paste("output/lions/baseline_lions_red_",t,".csv",sep = ""))[,2:855]
+    m_data_green = read.csv(paste("output/lions/baseline_lions_green_",t,".csv",sep = ""))[,2:855]
+    m_data_blue = read.csv(paste("output/lions/baseline_lions_blue_",t,".csv",sep = ""))[,2:855]
   }
   else if (versions == "twostep"){
-    m_data_red = read.csv(paste("~/Dynamic_Matrix_Recovery/output/twostep_lions_red_",t,".csv",sep = ""))[,2:855]
-    m_data_green = read.csv(paste("~/Dynamic_Matrix_Recovery/output/twostep_lions_reen_",t,".csv",sep = ""))[,2:855]
-    m_data_blue = read.csv(paste("~/Dynamic_Matrix_Recovery/output/twostep_lions_blue_",t,".csv",sep = ""))[,2:855]
+    m_data_red = read.csv(paste("output/lions/twostep_lions_red_",t,".csv",sep = ""))[,2:855]
+    m_data_green = read.csv(paste("output/lions/twostep_lions_reen_",t,".csv",sep = ""))[,2:855]
+    m_data_blue = read.csv(paste("output/lions/twostep_lions_blue_",t,".csv",sep = ""))[,2:855]
   }
   else {
-    m_data_red = read.csv(paste("~/Dynamic_Matrix_Recovery/output/lions_red_",t,".csv",sep = ""))[,2:855]
-    m_data_green = read.csv(paste("~/Dynamic_Matrix_Recovery/output/lions_green_",t,".csv",sep = ""))[,2:855]
-    m_data_blue = read.csv(paste("~/Dynamic_Matrix_Recovery/output/lions_blue_",t,".csv",sep = ""))[,2:855]
+    m_data_red = read.csv(paste("output/lions/lions_red_",t,".csv",sep = ""))[,2:855]
+    m_data_green = read.csv(paste("output/lions/lions_green_",t,".csv",sep = ""))[,2:855]
+    m_data_blue = read.csv(paste("output/lions/lions_blue_",t,".csv",sep = ""))[,2:855]
   }
   m_red = matrix(0,p,q)
   m_green = matrix(0,p,q)
