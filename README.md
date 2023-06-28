@@ -47,7 +47,7 @@
         <li>"<strong><em>dependent_whit_phiy.png</em></strong>": The relationship between AMSE and the mixing coefficient of noise $\xi$, which corresponds to <em>Figure 3 right</em> in the main context.</li>
         <li> "<strong><em>dependent_X.png</em></strong>": Under the dependent noise case, the influence of different noise variances and dependent coefficients $\alpha$ to MSE, which corresponds to <em>Figure 4 left</em> in the main context.</li>
         <li>"<strong><em>dependent_whit_phix.png</em></strong>": The relationship between AMSE and the mixing coefficient of covariance matrix X, which corresponds to <em>Figure 4 right</em> in the main context.</li>
-        <li>"<strong><em>netflix_data.png</em></strong>": The MSE at differnet time points for DLR and three benchmarks, which corresponds to <em>Figure 5</em> in the main context.</li>
+        <li>"<strong><em>netflix_mse(sample).png</em></strong>": The MSE for Filter 1(2) at differnet time points for DLR and three benchmarks, which corresponds to <em>Figure 5</em> in the main context.</li>
         <li>"<strong><em>real_lions_5(25,45,65,85).png</em></strong>, <strong><em>lions_5(25,45,65,85).png</em></strong>, <strong><em>baseline_lions_5(25,45,65,85).png</em></strong>, <strong><em>twostep_lions_5(25,45,65,85).png</em></strong>": The original, DLR estimated, Static estimated and TwoStep estimated frames in the lions video, which correspond to <em>Figure 6</em> in the main context.</li>
     </ul>
 </details>
@@ -78,10 +78,10 @@
         <ul>
             <li><strong>Netflix dataset</strong>
             <ul>
-                <li>"<strong><em>netflix_mse_sample_NoLink_(2_).csv</em></strong>": the output MSE of netflix data example using our DLR method for Filter 1(2).</li>
-                <li>"<strong><em>netflix/baseline_mse(_2).csv</em></strong>": the output MSE of netflix data example using Static method for Filter 1(2). </li>
-                <li>"<strong><em>netflix/twostep_mse(_2_).csv</em></strong>": the output MSE of netflix data example using TwoStep method for Filter 1(2). </li>
-                <li>"<strong><em>netflix/baseline_mse_tensor(_2_).csv</em></strong>": the output MSE of netflix data example using Tensor method for Filter 1(2). </li>
+                <li>"<strong><em>netflix_mse_sample_NoLink_(2_).csv</em></strong>": the output MSE of netflix data example using our DLR method for Filter 2(1).</li>
+                <li>"<strong><em>netflix/baseline_mse(_2).csv</em></strong>": the output MSE of netflix data example using Static method for Filter 2(1). </li>
+                <li>"<strong><em>netflix/twostep_mse(_2_).csv</em></strong>": the output MSE of netflix data example using TwoStep method for Filter 2(1). </li>
+                <li>"<strong><em>netflix/baseline_mse_tensor(_2_).csv</em></strong>": the output MSE of netflix data example using Tensor method for Filter 2(1). </li>
             </ul>
             </li>
             <li><strong>Davis 2016 lions video</strong>
