@@ -89,6 +89,9 @@ FISTA_func <- function(X1,X2,Y,T_,t_,h,p,q,lambda,itertime=3000,sto=FALSE,
   n_t = dim(X1)[2]
   weight_mat <- diag(kernel_weight(t_,h,T_))
   L <- Lipschitz_func(X1,X2,len,n_t,weight_mat,p,q)
+  if (sto){
+    L = L*batch_size/n_t/len
+  }
   #print(L)
   t = 1
   if (init){
@@ -98,11 +101,12 @@ FISTA_func <- function(X1,X2,Y,T_,t_,h,p,q,lambda,itertime=3000,sto=FALSE,
     M = M_input
   }
   N <- M
+  M_old <- M
   #iteration
   obj_value_before <- Inf
   if (sto){
     for (iter in 1:itertime) {
-      start <- Sys.time()
+      #start <- Sys.time()
       minibatch <- sample_func(batch_size,weight_mat,len,n_t)
       inner_pro <- inner_pro_func_M(X1,X2,N,len,n_t,sto = sto,minibatch = minibatch,batch_size = batch_size)
       grad_N <- grad_func(weight_mat,Y,inner_pro,X1,X2,len,n_t,p,q,sto = sto,minibatch = minibatch,batch_size = batch_size)
@@ -114,14 +118,15 @@ FISTA_func <- function(X1,X2,Y,T_,t_,h,p,q,lambda,itertime=3000,sto=FALSE,
       t <- t_
       if (as.integer(iter/20)*20==iter){
         inner_pro_bas <- inner_pro_func_M(X1,X2,M,len,n_t)
-        print(iter)
+        print(paste('iteration',iter))
         obj_value <- obj_func(weight_mat,Y,inner_pro_bas)
-        print(obj_value)
-        if (abs(obj_value-obj_value_before) < tor) break
+        print(paste('loss',obj_value))
+        if (abs(obj_value-obj_value_before) < tor || obj_value-obj_value_before > 0) break
         obj_value_before <- obj_value
+        M_old = M
       }
-      end <- Sys.time()
-      print(difftime(end, start, units = "sec"))
+      #end <- Sys.time()
+      #print(difftime(end, start, units = "sec"))
     }
     return(M)
   }
@@ -137,13 +142,14 @@ FISTA_func <- function(X1,X2,Y,T_,t_,h,p,q,lambda,itertime=3000,sto=FALSE,
       t <- t_
       if (as.integer(iter/20)*20==iter){
         inner_pro_bas <- inner_pro_func_M(X1,X2,M,len,n_t)
-        print(iter)
+        print(paste('iteration',iter))
         obj_value <- obj_func(weight_mat,Y,inner_pro_bas)
-        print(obj_value)
-        if (abs(obj_value-obj_value_before) < tor) break
+        print(paste('loss',obj_value))
+        if (abs(obj_value-obj_value_before) < tor || obj_value-obj_value_before > 0) break
         obj_value_before <- obj_value
+        M_old = M
       }
     }
-    return(M)
+    return(M_old)
   }
 }

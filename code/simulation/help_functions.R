@@ -200,22 +200,26 @@ simulation_func_single <- function(U_0,U_1,V_0,V_1,D_0,D_1,
       }
       Y <- Y + eps
     }
-    if (t + as.integer(h/2) <= T_){
-      for (i in 1:n_t) {
-        Y[min(t+as.integer(h/2),h_),i] <- Y[min(t+as.integer(h/2),h_),i] +
-          eps_gene[X1[min(t + as.integer(h/2),h_),i],X2[min(t + as.integer(h/2),h_),i]]
+    else{
+      if (t + as.integer(h/2) <= T_){
+        for (i in 1:n_t) {
+          Y[min(t+as.integer(h/2),h_),i] <- Y[min(t+as.integer(h/2),h_),i] +
+            eps_gene[X1[min(t + as.integer(h/2),h_),i],X2[min(t + as.integer(h/2),h_),i]]
+        }
+        eps_gene <- auto_rela*eps_gene + resid_para*matrix(rnorm(p*q,sd=eps_sd),p,q)
       }
-      eps_gene <- auto_rela*eps_gene + resid_para*matrix(rnorm(p*q,sd=eps_sd),p,q)
     }
   }
   #independent case for xi
   else{
     if (t==1){
-      eps = matrix(rnorm((1+as.integer(h/2))*n_t),1+as.integer(h/2),n_t)
+      eps = matrix(rnorm((1+as.integer(h/2))*n_t,sd=eps_sd),1+as.integer(h/2),n_t)
       Y <- Y + eps
     }
-    if (t + as.integer(h/2) <= T_){
-      Y[min(t+as.integer(h/2),h_),] <- Y[min(t+as.integer(h/2),h_),] + rnorm(n_t,sd=eps_sd)
+    else{
+      if (t + as.integer(h/2) <= T_){
+        Y[min(t+as.integer(h/2),h_),] <- Y[min(t+as.integer(h/2),h_),] + rnorm(n_t,sd=eps_sd)
+      }
     }
   }
   
@@ -225,9 +229,11 @@ simulation_func_single <- function(U_0,U_1,V_0,V_1,D_0,D_1,
     for (i in 1:n_t) {
       M_init[X1[1,i],X2[1,i]] <- Y[1,i]
     }
+    # batch_size = as.integer(n_t*dim(X1)[1]/10)
     ret_FISTA <- FISTA_func(X1,X2,Y,T_,t,h,p,q,lambda,sto = TRUE,batch_size = as.integer(n_t*h_/10),init = FALSE,M_input=M_init,tor=tor)
   }
   else{
+    # batch_size = as.integer(n_t*dim(X1)[1]/10)
     ret_FISTA <- FISTA_func(X1,X2,Y,T_,t,h,p,q,lambda,sto = TRUE,batch_size = as.integer(n_t*h_/10),init=FALSE,M_input=M_input,tor=tor)
   }
   #svd_ret_FISTA <- svd(ret_FISTA)
@@ -383,8 +389,17 @@ fold_tensor <- function(X,mode,shape){
 mean_time_mse <- function(M,M_hat,T_,p,q){
   return(sum((M-M_hat)*(M-M_hat))/T_/p/q)
 }
-                                     
-ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100){
+       
+tensor_mse <- function(M,M_hat,T_,X){
+  ret_mse = rep(0,T_)
+  for (i in 1:T_){
+    lens = length(X[[i]])
+    ret_mse[i] = sum((M[i,,]-M_hat[i,,])*(M[i,,]-M_hat[i,,]))/lens
+  }
+  return(ret_mse)
+}
+
+ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100,netflix=FALSE){
   # initial
   Z = Y
   Y1 = Y
@@ -396,10 +411,15 @@ ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100
   
   for (iter in 1:itertime) {
     # update Z
-    print(iter)
+    print(paste('iteration',iter))
 #     begin <- Sys.time()
     Z[X] = 1/(lamda + 3*beta)*(W1+W2+W3+beta*(Y1+Y2+Y3)+lamda*Y)[X]
     Z[!X] = 1/(3*beta)*(W1+W2+W3+beta*(Y1+Y2+Y3))[!X]
+    if (netflix == TRUE){
+      Z[Z>5] = 3
+      Z[Z<1] = 3
+    }
+    print(mean_time_mse(Y,Z,T_,p,q))
     # update stepsize
     # update Y and W
     Y1 = fold_tensor(shrinkage_function(unfold_tensor(Z,mode = 1) - 
@@ -416,7 +436,6 @@ ADM_TR <- function(X,Y,T_,p,q,beta=0.1,lamda=0.1,c_beta=1,c_lamda=1,itertime=100
     lamda = lamda*c_lamda
 #     end <- Sys.time()
 #     print(difftime(end, begin, units = "sec"))
-#     print(mean_time_mse(M,Z,T_,p,q))
   }
   return(Z)
 }
