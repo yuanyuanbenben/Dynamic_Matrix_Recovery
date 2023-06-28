@@ -11,15 +11,15 @@ library(doParallel)
 library(npmr)
 
 
-setwd('/home/yuanyuanbenben/project_dmc/dmr_github/Dynamic_Matrix_Recovery-main')
+setwd('/your dictionary/Dynamic_Matrix_Recovery')
 
 
-source("code/real_data/cs_DFISTA.R")
-source("code/real_data/cs_baseline_FISTA.R")
+source("code/real_data/video_data/cs_DFISTA.R")
+source("code/real_data/video_data/cs_baseline_FISTA.R")
 source("code/real_data/help_functions.R")
 source("code/real_data/video_data/robust_pca.R")
 
-load("code/real_data/video_data/lions_video.RData")
+load("data/lions_video.RData")
 
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(21)
