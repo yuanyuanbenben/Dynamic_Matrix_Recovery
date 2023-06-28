@@ -86,8 +86,14 @@
             </li>
             <li><strong>Davis 2016 lions video</strong>
             <ul>
-                <li>"<strong><em>lions_ren(blue,green)_5(25,45,65,85).csv</em></strong>": the output rgb values of corresponding fames using DLR method. </li>
-                <li>"<strong><em>baseline_lions_ren(blue,green)_5(25,45,65,85).csv</em></strong>": the output rgb values of corresponding famres using Static method. </li>
+                <li>"<strong><em>lions/lions_ren(blue,green)_5(25,45,65,85).csv</em></strong>": the output rgb values of corresponding fames using DLR method. </li>
+                <li>"<strong><em>lions/baseline_lions_ren(blue,green)_5(25,45,65,85).csv</em></strong>": the output rgb values of corresponding famres using Static method. </li>
+            </ul>
+            </li>
+             <li><strong>Cifar10 dataset</strong>
+            <ul>
+                <li>"<strong><em>cifar10/True_lenet(resnet)_..._..._acc.pth</em></strong>": the checkpoint for recovered dataset.</li>
+                <li>"<strong><em>cifar10/False_lenet(resnet)_..._..._acc.pth</em></strong>": the checkpoint for dataset without recovery. </li>
             </ul>
             </li>
         </ul>
