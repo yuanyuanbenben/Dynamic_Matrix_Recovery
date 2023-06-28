@@ -78,10 +78,10 @@
         <ul>
             <li><strong>Netflix dataset</strong>
             <ul>
-                <li>"<strong><em>netflix/mse_1(100).csv</em></strong>": the output MSE of netflix data example using our DLR method.</li>
-                <li>"<strong><em>netflix/baseline_mse_1(100).csv</em></strong>": the output MSE of netflix data example using Static method. </li>
-                <li>"<strong><em>netflix/baseline_mse_twostep.csv</em></strong>": the output MSE of netflix data example using TwoStep method. </li>
-                <li>"<strong><em>netflix/baseline_mse_tensor.csv</em></strong>": the output MSE of netflix data example using Tensor method. </li>
+                <li>"<strong><em>netflix_mse_sample_NoLink_(2_).csv</em></strong>": the output MSE of netflix data example using our DLR method for Filter 1(2).</li>
+                <li>"<strong><em>netflix/baseline_mse(_2).csv</em></strong>": the output MSE of netflix data example using Static method for Filter 1(2). </li>
+                <li>"<strong><em>netflix/twostep_mse(_2_).csv</em></strong>": the output MSE of netflix data example using TwoStep method for Filter 1(2). </li>
+                <li>"<strong><em>netflix/baseline_mse_tensor(_2_).csv</em></strong>": the output MSE of netflix data example using Tensor method for Filter 1(2). </li>
             </ul>
             </li>
             <li><strong>Davis 2016 lions video</strong>
