@@ -11,7 +11,7 @@ library(reshape2)
 library(foreach)
 library(doParallel)
 
-
+setwd("/your dictionary/Dynamic_Matrix_Recovery")
 
 # input
 args = commandArgs(trailingOnly = TRUE)
@@ -41,7 +41,6 @@ if (! save_mode %in% c('Save','NoSave')){
   warning("Please using 'Save' for saving results and 'NoSave' for no saving results.")
 } 
 
-setwd("/home/yuanyuanbenben/project_dmc/dmr_github/Dynamic_Matrix_Recovery-main")
 
 # help functions
 
