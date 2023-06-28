@@ -26,12 +26,12 @@
 </details>
 
 <details>
-    <summary>Directory <strong><em>data</em></strong> contains original real data and environment after preprocessing used in main context.</summary>
+    <summary>Directory <strong><em>data</em></strong> contains original real data used in main context.</summary>
     <ul>
         <li>"<strong><em>netflix_data.zip</em></strong>": the raw netflix dataset.</li>
         <li>"<strong><em>lions/0000(0095).jpg</em></strong>": the raw 1-96 frames of the lions video.</li>
-        <li>"<strong><em>netflix_data.RData</em></strong>": the working environment after preprocess the netflix dataset.</li>
-        <li>"<strong><em>video_data.RData</em></strong>": the working environment after process the lions video dataset.</li>
+<!--         <li>"<strong><em>netflix_data.RData</em></strong>": the working environment after preprocess the netflix dataset.</li>
+        <li>"<strong><em>video_data.RData</em></strong>": the working environment after process the lions video dataset.</li> -->
     </ul>
 </details>
 
