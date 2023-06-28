@@ -1,8 +1,11 @@
 # pre process 
 
 # read data from original dataset
-setwd("/home/yuanyuanbenben/project_dmc/dmr_github/Dynamic_Matrix_Recovery-main/code")
-data <- read.csv("real_data/netflix_data/netflix_data.csv")
+setwd("/your dictionary/Dynamic_Matrix_Recovery")
+# download original data
+data <- read.csv("data/netflix_data.csv")
+
+
 names(data) <- c("movies","id","score","time")
 dims <- dim(data)[1]
 data$time <- as.Date(data$time)
@@ -145,4 +148,4 @@ for (i in 1:T_) {
 #   c3 <- c2[-index_3]
 #   train_Y_total_cv4[[i]] <- c3
 # }
-save.image("netflixdata.RData")
+save.image("data/netflixdata.RData")
