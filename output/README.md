@@ -1,9 +1,8 @@
 ## Output Part
 
 All simulation experiments and real data examples output and results are saved in this directory.
-
-    <ul>
-        <li><strong>Simulation</strong>
+<ul>
+    <li><strong>Simulation</strong>
         <ul>
             <li><strong>independent case</strong>
             <ul>
@@ -46,4 +45,4 @@ All simulation experiments and real data examples output and results are saved i
             </li>
         </ul>
         </li>
-    </ul>
+</ul>
