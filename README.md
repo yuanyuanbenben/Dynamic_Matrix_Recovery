@@ -188,7 +188,7 @@
 <details>
     <summary><strong>Real data example 2: the lion video in Davis 2017 dataset</strong></summary>
     <ol>
-        <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/</em>.</li>
+        <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/video_data</em>.</li>
         <li>Download the <strong><em>0000.jpg</em></strong> to <strong><em>0095.jpg</em></strong> in the directory <em>~/Dynamic_Matrix_recovery/data/lions</em>(or download the dataset <a href="https://davischallenge.org/davis2017/code.html#unsupervised">here</a>). </li>
         <li>Revise the line 7 in <strong><em>realdata2_preprocess.R</em></strong> based on your own path to make sure the original dataset can be correctly readed. Run the R script <strong><em>realdata2_preprocess.R</em></strong> to preprocess the dataset. The environment will also be saved as the environment <strong><em>lions_data.RData</em></strong> in the directory <em>Dynamic_Matrix_Recovery/data/</em>.</li>
         <li>Revise the line 14 in <strong><em>realdata2_test.R</em></strong> to make sure the R scripts <strong><em>cs_DFISTA.R</em></strong>, <strong><em>cs_baseline_FISTA.R</em></strong>, <strong><em>help_functions.R</em></strong> and <strong><em>robust_pca.R</em></strong> are available.</li>
