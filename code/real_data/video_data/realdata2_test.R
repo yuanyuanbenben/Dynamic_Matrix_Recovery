@@ -62,7 +62,7 @@ result_mse <- foreach(mode=c(1,2,3),.packages = c("psych","kernlab","npmr"),.ver
     M_input <- cs_FISTA_func(X1,X2,Y,T_,t,p,q,lambda,conv_ker,itertime=40000,sto=TRUE,
                            batch_size=batch_size,init=FALSE,M_input=M_input,tor=tor)
     
-  write.csv(construc_pic(t,M_input,mode,S_total),paste("output/lions/lions_",label[mode],"_",t,".csv",sep = ""))
+  # write.csv(construc_pic(t,M_input,mode,S_total),paste("output/lions/lions_",label[mode],"_",t,".csv",sep = ""))
   cs_test_error_func(M_input,L_total[mode,t,,],p,q)
 }
 
@@ -82,7 +82,7 @@ result_mse <- foreach(mode=c(1,2,3),.packages = c("psych","kernlab","npmr"),.ver
     M_input <- baseline_cs_FISTA_func(X1,X2,Y,T_,t,p,q,lambda,conv_ker,itertime=40000,sto=TRUE,
                            batch_size=batch_size,init=FALSE,M_input=M_input,tor=tor)
 
-  write.csv(construc_pic(t,M_input,mode,S_total),paste("output/lions/baseline_lions_",label[mode],"_",t,".csv",sep = ""))
+  # write.csv(construc_pic(t,M_input,mode,S_total),paste("output/lions/baseline_lions_",label[mode],"_",t,".csv",sep = ""))
   cs_test_error_func(M_input,L_total[mode,t,,],p,q)
 }
 
