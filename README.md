@@ -196,3 +196,16 @@
         <li>For <em>Figure 6</em>, return to the previous directory and run the corresponding part in <strong><em>plot.R</em></strong>.</li>
     </ol>
 </details>
+<details>
+    <summary><strong>Real data example 3: the cifar10 dataset</strong></summary>
+    <ol>
+        <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/cifar10</em>.</li>
+        <li>Download the cifar10 dataset or just run the file <strong><em>main.py</em></strong> firstly to download the dataset.</li>
+        <li>Run <strong><em>compress.py</em></strong> to prepared the cifar10 for compressing, recoverying and adding noises. You can change the parameter "<em>recovery</em>" as "<em>True</em>" or "<em>False</em>" and change the sample size and tuning parameter lambda as well.</li>
+        <li>In <strong><em>main.py</em></strong>, change "<em>netname</em>" can change the network model be applied to the dataset. For running, we recommand directly input
+        	<code>python -u main.py > test.log 2>&1 &</code>
+        	in your terminal. And the checkpoint saved the epoch and test acc for best acc attained in validation set. If you stop the code and want to resume the training process, using
+        	<code>python -u main.py -r > test.log 2>&1 &</code> is enough.
+        </li> 
+    </ol>
+</details>
