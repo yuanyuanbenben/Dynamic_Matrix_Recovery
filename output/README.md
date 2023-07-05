@@ -2,8 +2,6 @@
 
 All simulation experiments and real data examples output and results are saved in this directory.
 
-<details>
-    <summary>Directory <strong><em>output</em></strong> contains the results and outputs of those simulation experiments and real data examples</summary>
     <ul>
         <li><strong>Simulation</strong>
         <ul>
@@ -49,4 +47,3 @@ All simulation experiments and real data examples output and results are saved i
         </ul>
         </li>
     </ul>
-</details>
