@@ -120,13 +120,18 @@
 </details>
 
 ### Workflows
-
 <details>
     <summary><strong>Simulation 1 and 2</strong></summary>
     <ol>
         <li>Open the floder <em>Dynamic_Matrix_Recovery/code/simulation/</em>.</li>
-        <li>Make sure that the R scripts <strong><em>DFISTA.R</em></strong>, <strong><em>baseline_FISTA.R</em></strong> and <strong><em>help_functions.R</em></strong> are available in the path <em>~/Dynamic_Matrix_Recovery/code/simulation/...</em>. Or revise the path in <strong><em>simulations.R</em></strong> line 15-17 to match the path of those three R scripts.</li>
-        <li>In the R scripts <strong><em>simulations.R</em></strong>simulations.R, independent case and dependent case simulations are performed. Running corresponding codes of different methods including our DLR method and three benchmarks Static, TwoStep and Tensor can obtain corresponding results. Parameters including the dimension of matrix, number of time points and sample size can easily changed if needed. All codes that stores output is commented out to avoid overwriting existing output.</li>
+        <li>Revise the line 14 in "<strong><em>simulations.R</em></strong>" based on your own path to make sure that the R scripts <strong><em>DFISTA.R</em></strong>, <strong><em>baseline_FISTA.R</em></strong> and <strong><em>help_functions.R</em></strong> are available in the correct path. 
+        <li>In the R scripts <strong><em>simulations.R</em></strong>simulations.R, independent case and dependent case simulations are performed. Running the code of different methods including our DLR method and three benchmarks Static, TwoStep and Tensor can obtain corresponding results. Parameters including the dimension of matrix, number of time points and sample size can also changed if needed. For running, we recommand directly input
+        	<code>nohup R --slave --vanilla --args Method_name Save_mode < simulations.R > test.log 2>&1 &</code>
+        in terminal. Here "<em>Method_name</em>" can choose "<em>DLR</em>", "<em>DLR_random</em>", "<em>Dependent_Case</em>" or benchmarks "<em>Static</em>","<em>TwoStep</em>" and "<em>Tensor</em>" and the default value is "<em>DLR</em>". "<em>Save_mode</em>" can choose "<em>Save</em>" for saving results and "<em>NoSave</em>" for no saving results and the default value is "<em>NoSave</em>". For example, for runing simulation 1 using our algorithm 1 and do not saving results, input 
+        <code>nohup R --slave --vanilla < simulations.R > test.log 2>&1 &</code> in terminal is enough.
+        Also, for runing simulation 1 using benchmark "Static" and saving results, input
+        <code>nohup R --slave --vanilla --args Static Save < simulations.R > test.log 2>&1 &</code> in terminal is enough and results will be saved in the output files "<strong><em>output/baseline_120000.csv"</em></strong>" and "<strong><em>output/baseline_120000.csv"</em></strong>".
+        </li> 
         <li> For <em>Figure 1-4</em>, return to the previous directory and run the corresponding part in <strong><em>plot.R</em></strong>.</li>
     </ol>
 </details>
