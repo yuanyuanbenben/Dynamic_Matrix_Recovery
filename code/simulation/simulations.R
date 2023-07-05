@@ -317,4 +317,6 @@ if (method == 'Dependent_Case'){
   }
 }
 
-stopCluster(cl) 
+if (method %in% c('DLR_random','Static')){
+  stopCluster(cl) 
+}
