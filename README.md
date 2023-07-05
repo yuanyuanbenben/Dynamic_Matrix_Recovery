@@ -5,7 +5,6 @@
 <details>
     <summary>Directory <strong><em>code</em></strong> contains all codes used in the simulation experiments and real data examples </summary>
     <ul>
-
         <li>The folder <strong><em>simulation</em></strong> contains codes used for "<em>Section 4: Simulation Studies</em>"
         <ul>
             <li>"<strong><em>DFISTA.R</em></strong>" and "<strong><em>baseline_FISTA.R</em></strong>": functions to implement the optimal algorithm used for methods presented in article under the dynamic matrix completion setting.</li>
@@ -13,7 +12,6 @@
             <li> "<strong><em>help_functions.R</em></strong>": some auxiliary functions for above implement.</li>
         </ul>
         </li>
-
         <li> The folder <strong><em>real_data</em></strong> contains codes used for "<em>Section 5: Real Data Examples</em>"
         <ul>
             <li>The folder <strong><em>netflix_data</em></strong> contains flies about the Netflix data experiment.
