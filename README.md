@@ -183,7 +183,7 @@
         <li>For <em>Figure 5</em>, return to the previous directory and run the corresponding part in <strong><em>plot.R</em></strong>.</li>
     </ol>
 </details>
-<details>
+
 <details>
     <summary><strong>Real data example 2: the lion video in Davis 2017 dataset</strong></summary>
     <ol>
