@@ -1,8 +1,7 @@
 ## Code Part
 
 
-<details>
-    <summary>Directory <strong><em>code</em></strong> contains all codes used in the simulation experiments and real data examples </summary>
+  Directory <strong><em>code</em></strong> contains all codes used in the simulation experiments and real data examples 
     <ul>
         <li>The folder <strong><em>simulation</em></strong> contains codes used for "<em>Section 4: Simulation Studies</em>"
         <ul>
@@ -39,5 +38,4 @@
         </li>
         <li>"<strong><em>plot.R</em></strong>": functions to collect results in simulations and real data examples and draw the pictures used in the article.</li>
     </ul>
-</details>
             
