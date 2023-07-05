@@ -165,17 +165,25 @@
 -->
 
 
-
  <details>
     <summary><strong>Real data example 1: the netflix dataset</strong></summary>
     <ol>
-        <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/</em>.</li>
-        <li>Make sure the R scripts <strong><em>DFISTA.R</em></strong>, <strong><em>baseline_FISTA.R</em></strong> and <strong><em>help_functions.R</em></strong> are available in the path <em>~/Dynamic_Matrix_Recovery/code/simulation/...</em> and the R script <strong><em>help_functions.R</em></strong> is available in the path <em>~/Dynamic_Matrix_Recovery/code/real_data/...</em>. Or revise the path in <strong><em>realdata1_test.R</em></strong> line 15-18 to match the path of those four R scripts.</li>
-        <li>Download the <strong><em>netflix_data.zip</em></strong> in the directory <em>~/Dynamic_Matrix_recovery/data/</em>, unzip it and save it as <em>~/Dynamic_Matrix_recovery/data/netflix_data.csv</em>(or download the dataset <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">here</a>). Run the R script <strong><em>realdata1_preprocess.R</em></strong> to preprocess the dataset. Another alternative is directly using the environment <strong><em>netflix_data.RData</em></strong> in the directory <em>Dynamic_Matrix_Recovery/data/</em>.</li>
-        <li> Run the R script <strong><em>realdata1_test.R</em></strong>, in which the DLR method and benchmarks can be applied to the dataset and codes that stores output is commented out to avoid overwriting existing output.</li>
+        <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/netflix_data</em>.</li>
+        <li>Download the <strong><em>netflix_data.zip</em></strong> in the directory <em>~/Dynamic_Matrix_recovery/data/</em>, unzip it and save it as <em>~/Dynamic_Matrix_recovery/data/netflix_data.csv</em>(or download the dataset <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">here</a>).</li>
+        <li>Revise the line 4 in <strong><em>realdata1_preprocess.R</em></strong> based on your own path to make sure the original dataset can be correctly readed. Run the R script <strong><em>realdata1_preprocess.R</em></strong> to preprocess the dataset. The environment will also be saved as the environment <strong><em>netflixdata.RData</em></strong> in the directory <em>Dynamic_Matrix_Recovery/data/</em>.</li>
+        <li>Revise the line 14 in <strong><em>realdata1_test.R</em></strong> based on your own path to make sure the R scripts <strong><em>DFISTA.R</em></strong>, <strong><em>baseline_FISTA.R</em></strong> and <strong><em>help_functions.R</em></strong> are available. </li>
+        <li> In the R script <strong><em>realdata1_test.R</em></strong>, the DLR method and benchmarks can be applied to the dataset. For running, we recommand directly input
+        	<code>nohup R --slave --vanilla --args Method_name Link Save_mode < realdata1_test.R > test.log 2>&1 &</code>
+        	in your terminal. Here "<em>Method_name</em>" can choose "<em>DLR</em>" for our method and benchmarks "<em>Static</em>", "<em>TwoStep</em>" and "<em>Tensor</em>" and the default value is "<em>DLR</em>". The default value for "<em>Link</em>" is "<em>NoLink</em>" which means using no additional link function while you can choose "<em>Link</em>" to use the version with link function. "<em>Save_mode</em>" has default value "<em>NoSave</em>" which means that the results will not be saved and you can choose "<em>Save</em>" to save the output. For example, if you want to run our DLR method with no link function and don't saving, just run
+        	<code>nohup R --slave --vanilla < realdata1_test.R > test.log 2>&1 &</code>
+        	in your terminal is enough. Besiders, if you want to run the Static method with link functio and saving output, you can input
+        <code>nohup R --slave --vanilla --args Static Link Save < realdata1_test.R > test.log 2>&1 &</code>
+        in terminal and results will saved in the output files <strong><em>output/baseline_matrix_1(100).csv</em></strong> and <strong><em>output/baseline_mse.csv</em></strong>.
+        </li> 
         <li>For <em>Figure 5</em>, return to the previous directory and run the corresponding part in <strong><em>plot.R</em></strong>.</li>
     </ol>
 </details>
+<details>
 <details>
     <summary><strong>Real data example 2: the lion video in Davis 2017 dataset</strong></summary>
     <ol>
