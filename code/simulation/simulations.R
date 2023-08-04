@@ -33,7 +33,7 @@ if (length(args) == 0){
   }
 }
 
-if (! method %in% c('DLR','DLR_rate','DLR_random','Static','TwoStep','Tensor','Dependent_Case')){
+if (! method %in% c('DLR','DLR_random','Static','TwoStep','Tensor','Dependent_Case')){
   warning(paste('The method',method,'has not been implemented in the code yet!'))
 } 
 
@@ -204,11 +204,11 @@ if (method == 'Static'){
   M_estimate_Static <- array(0,dim=c(T_,p,q))
   foreach(t=1:T_,.packages = c("psych","kernlab"),.combine="rbind",.verbose=TRUE)%dopar% {
     begin <- Sys.time()
-    ret <- simulation_func_baseline(U_0,U_1,V_0,V_1,D_0,D_1,T_,n_t,p,q,r,t,eps_sd = 1,lambda = 58)
+    ret <- simulation_func_baseline(U_0,U_1,V_0,V_1,D_0,D_1,T_=T_,n_t=n_t,p=p,q=q,r=r,t=t,eps_sd = 1,lambda = 58)
     result_mse_Static[t] <- ret[[1]]
     M_estimate_Static[t,,] <- ret[[2]]
     end <- Sys.time()
-    difftime(end1, begin1, units = "sec")
+    difftime(end, begin, units = "sec")
   }
   #save
   if (save_mode == 'Save'){
