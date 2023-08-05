@@ -52,7 +52,7 @@ baseline_FISTA_func <- function(X1,X2,Y,n_t,p,q,lambda,itertime=30000,constant=T
   obj_value_before <- Inf
   # iteration
   for (iter in 1:itertime) {
-    start <- Sys.time()
+    #start <- Sys.time()
     inner_pro <- baseline_inner_pro_func_M(X1,X2,N,n_t)
     grad_N <- baseline_grad_func(Y,inner_pro,X1,X2,n_t,p,q)
     svd_G <- svd(N - 1/L*grad_N)
@@ -68,8 +68,8 @@ baseline_FISTA_func <- function(X1,X2,Y,n_t,p,q,lambda,itertime=30000,constant=T
       if (abs(obj_value-obj_value_before) < tor) break
       obj_value_before <- obj_value
     }
-    end <- Sys.time()
-    print(difftime(end, start, units = "sec"))
+    #end <- Sys.time()
+    #print(difftime(end, start, units = "sec"))
   }
   return(M)
 }
