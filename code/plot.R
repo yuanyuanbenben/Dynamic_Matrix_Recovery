@@ -3,15 +3,17 @@ library(latex2exp)
 library(ggplot2)
 library(reshape2)
 
-source("~/Dynamic_Matrix_Recovery/code/real_data/help_functions.R")
+setwd('/your dictionary/Dynamic_Matrix_Recovery')
+
+source("code/real_data/help_functions.R")
 
 #
 # Figure 1
 #
-mse_baseline <- read.csv("~/Dynamic_Matrix_Recovery/output/baseline_120000.csv")[,2]
-mse_tensor <- read.csv("~/Dynamic_Matrix_Recovery/output/tensor_30000.csv")[,2]
-mse_dynamic <- read.csv("~/Dynamic_Matrix_Recovery/output/dmc_5000_30000.csv")[,7]
-mse_local_baseline <- read.csv("~/Dynamic_Matrix_Recovery/output/localsmooth_120000.csv")[,2]
+mse_baseline <- read.csv("output/baseline_120000.csv")[,2]
+mse_tensor <- read.csv("output/tensor_30000.csv")[,2]
+mse_dynamic <- read.csv("output/dmc_5000_30000.csv")[,7]
+mse_local_baseline <- read.csv("output/localsmooth_120000.csv")[,2]
 mse_data <- data.frame("t"=seq(0.01,1,0.01)*100,"benchmark1"=mse_baseline, "benchmark2" = mse_local_baseline,
                        "benchmark3"=mse_tensor, "DLRTR"=mse_dynamic)
 mydata <- melt(mse_data,id="t")
@@ -37,7 +39,7 @@ ggplot(data = mydata,aes(x=t,y=value,group = variable,
 #
 # Figure 2 left
 #
-mse = read.csv("~/Dynamic_Matrix_Recovery/output/phase_transition.csv")
+mse = read.csv("output/phase_transition.csv")
 mse_10000_300 = mse[1,seq(2,301,6)]
 mse_15000_200 = mse[2,seq(2,201,4)]
 mse_30000_100 = mse[3,seq(2,101,2)]
@@ -96,7 +98,7 @@ ggplot(data = mydata,aes(x=t,y=value,group = variable,
 #
 # Figure 2 right
 #
-mse_precise <- read.csv("~/Dynamic_Matrix_Recovery/output/phase_transition_precise.csv")[,2:27]
+mse_precise <- read.csv("output/phase_transition_precise.csv")[,2:27]
 plot_result <- rep(0,26)
 for (i in 1:26) {
   plot_result[i] <- mean(mse_precise[30:70,i])
@@ -121,7 +123,7 @@ ggplot(data = mydata[1:11,],aes(x=index,y=mse))+
 #
 # Figure 3 left
 #
-mse_dependent <- read.csv("~/Dynamic_Matrix_Recovery/output/dependent_mc.csv")[,2:67]
+mse_dependent <- read.csv("output/dependent_mc.csv")[,2:67]
 mse_beta_0 <- mse_dependent[,23]
 mse_beta_0.3 <- mse_dependent[,26]
 mse_beta_0.6 <- mse_dependent[,29]
@@ -205,7 +207,7 @@ ggplot(data = mydata,aes(x=phi,y=value,group = variable,
 #
 # Figure 4 left
 #
-mse_X_dependent <- read.csv("~/Dynamic_Matrix_Recovery/output/dependent_X_mc.csv")[,2:67]
+mse_X_dependent <- read.csv("output/dependent_X_mc.csv")[,2:67]
 mse_X_beta_0 <- mse_X_dependent[,33]
 mse_X_beta_0.3 <- mse_X_dependent[,30]
 mse_X_beta_0.6 <- mse_X_dependent[,27]
@@ -291,16 +293,16 @@ finish_ = "2006-3-01"
 T_ = 100
 mse_total = matrix(0,T_,101)
 for (i in 1:T_) {
-  mse_total[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/netflix_output/mse_",i,".csv",sep = ""))[1:101,2]
+  mse_total[i,] <- read.csv(paste("output/netflix_output/mse_",i,".csv",sep = ""))[1:101,2]
 }
 mse_baseline = matrix(0,T_,101)
 for (i in 1:T_) {
-  mse_baseline[i,] <- read.csv(paste("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_",i,".csv",sep = ""))[1:101,2]
+  mse_baseline[i,] <- read.csv(paste("output/netflix_output/baseline_mse_",i,".csv",sep = ""))[1:101,2]
 }
 mse_netflix = mse_total[,73]
 mse_netflix_baseline = mse_baseline[,73]
-mse_netflix_twostep = read.csv("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_twostep")[,2]
-mse_netflix_tensor = read.csv("~/Dynamic_Matrix_Recovery/output/netflix_output/baseline_mse_tensor")[,2]
+mse_netflix_twostep = read.csv("output/netflix_output/baseline_mse_twostep")[,2]
+mse_netflix_tensor = read.csv("output/netflix_output/baseline_mse_tensor")[,2]
 mse_data <- data.frame("t"=seq.Date(as.Date(origin),as.Date(finish),by=22),"Static"=mse_netflix_baseline,"TwoStep"=mse_netflix_twostep,
                        "Tensor"=mse_netflix_tensor,"DLRTR"=mse_netflix)
 mydata <- melt(mse_data,id="t")
