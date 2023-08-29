@@ -169,7 +169,7 @@
     <summary><strong>Real data example 1: the netflix dataset</strong></summary>
     <ol>
         <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/netflix_data</em>.</li>
-        <li>Download the <strong><em>netflix_data.zip</em></strong> in the directory <em>~/Dynamic_Matrix_recovery/data/</em>, unzip it and save it as <em>~/Dynamic_Matrix_recovery/data/netflix_data.csv</em>(or download the dataset <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">here</a>).</li>
+        <li>Download <!--the <strong><em>netflix_data.zip</em></strong> in the directory <em>~/Dynamic_Matrix_recovery/data/</em>, unzip it and save it as <em>~/Dynamic_Matrix_recovery/data/netflix_data.csv</em>(or download) --> the dataset <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">here</a>.</li>
         <li>Revise the line 4 in <strong><em>realdata1_preprocess.R</em></strong> based on your own path to make sure the original dataset can be correctly readed. Run the R script <strong><em>realdata1_preprocess.R</em></strong> to preprocess the dataset. The environment will also be saved as the environment <strong><em>netflixdata.RData</em></strong> in the directory <em>Dynamic_Matrix_Recovery/data/</em>.</li>
         <li>Revise the line 14 in <strong><em>realdata1_test.R</em></strong> based on your own path to make sure the R scripts <strong><em>DFISTA.R</em></strong>, <strong><em>baseline_FISTA.R</em></strong> and <strong><em>help_functions.R</em></strong> are available. </li>
         <li> In the R script <strong><em>realdata1_test.R</em></strong>, the DLR method and benchmarks can be applied to the dataset. For running, we recommand directly input
@@ -200,7 +200,7 @@
     <summary><strong>Real data example 3: the cifar10 dataset</strong></summary>
     <ol>
         <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/cifar10</em>.</li>
-        <li>Download the cifar10 dataset or just run the file <strong><em>main.py</em></strong> firstly to download the dataset.</li>
+        <li>Download the cifar10 dataset from or just run the file <strong><em>main.py</em></strong> firstly to download the dataset.</li>
         <li>Run <strong><em>compress.py</em></strong> to prepared the cifar10 for compressing, recoverying and adding noises. You can change the parameter "<em>recovery</em>" as "<em>True</em>" or "<em>False</em>" and change the sample size and tuning parameter lambda as well.</li>
         <li>In <strong><em>main.py</em></strong>, change "<em>netname</em>" can change the network model be applied to the dataset. For running, we recommand directly input
         	<code>python -u main.py > test.log 2>&1 &</code>
