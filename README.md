@@ -2,8 +2,6 @@
 
 ### Overview
 
-#### All folders and the files contained within them are available in the GitHub public repository <a href="https://github.com/yuanyuanbenben/Dynamic_Matrix_Recovery">https://github.com/yuanyuanbenben/Dynamic_Matrix_Recovery</a>.
-
 <details>
     <summary>Directory <strong><em>code</em></strong> contains all codes used in the simulation experiments and real data examples </summary>
     <ul>
