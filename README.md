@@ -48,6 +48,8 @@
     <ul>
         <li>"<strong><em>netflix_data.zip</em></strong>": the raw netflix dataset.</li>
         <li>"<strong><em>lions/0000(0095).jpg</em></strong>": the raw 1-96 frames of the lions video.</li>
+	<li>"<strong><em>cifar10/data_batch1(5)</em></strong>": the raw train dataset of the cifar-10 dataset.</li>
+        <li>"<strong><em>cifar10/test_batch</em></strong>": the raw test dataset of the cifar-10 dataset.</li>
 <!--         <li>"<strong><em>netflix_data.RData</em></strong>": the working environment after preprocess the netflix dataset.</li>
         <li>"<strong><em>video_data.RData</em></strong>": the working environment after process the lions video dataset.</li> -->
     </ul>
@@ -202,7 +204,7 @@
         <li>Open the floder <em>Dynamic_Matrix_Recovery/code/real_data/cifar10</em>.</li>
         <li>Download the cifar10 dataset <a href="https://www.cs.toronto.edu/~kriz/cifar.html">here</a> or just run the file <strong><em>main.py</em></strong> firstly to automatic download the dataset based on the torchvision package.</li>
         <li>Run <strong><em>compress.py</em></strong> to prepared the cifar10 for compressing, recoverying and adding noises. You can change the parameter "<em>recovery</em>" as "<em>True</em>" or "<em>False</em>" and change the sample size and tuning parameter lambda as well.</li>
-        <li>In <strong><em>main.py</em></strong>, change "<em>netname</em>" can change the network model be applied to the dataset. For running, we recommand directly input
+        <li>In <strong><em>main.py</em></strong>, changing "<em>netname</em>" can change the network model be applied to the dataset. For running, we recommand directly input
         	<code>python -u main.py > test.log 2>&1 &</code>
         	in your terminal. And the checkpoint saved the epoch and test acc for best acc attained in validation set. If you stop the code and want to resume the training process, using
         	<code>python -u main.py -r > test.log 2>&1 &</code> is enough.
