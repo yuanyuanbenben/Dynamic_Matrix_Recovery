@@ -48,7 +48,7 @@
     <ul>
         <li>"<strong><em>netflix_data.zip</em></strong>": the raw netflix dataset.</li>
         <li>"<strong><em>lions/0000(0095).jpg</em></strong>": the raw 1-96 frames of the lions video.</li>
-	<li>"<strong><em>cifar10/data_batch1(5)</em></strong>": the raw train dataset of the cifar-10 dataset.</li>
+	<li>"<strong><em>cifar10/data_batch_1(5)</em></strong>": the raw train dataset of the cifar-10 dataset.</li>
         <li>"<strong><em>cifar10/test_batch</em></strong>": the raw test dataset of the cifar-10 dataset.</li>
 <!--         <li>"<strong><em>netflix_data.RData</em></strong>": the working environment after preprocess the netflix dataset.</li>
         <li>"<strong><em>video_data.RData</em></strong>": the working environment after process the lions video dataset.</li> -->
