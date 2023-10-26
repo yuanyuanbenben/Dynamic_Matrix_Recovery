@@ -291,36 +291,66 @@ origin = "1999-12-30"
 finish = "2005-12-18"
 finish_ = "2006-3-01"
 T_ = 100
-mse_total = matrix(0,T_,101)
-for (i in 1:T_) {
-  mse_total[i,] <- read.csv(paste("output/netflix_output/mse_",i,".csv",sep = ""))[1:101,2]
+pic = 'old'
+# figure 5 left
+if (pic=='old'){
+  mse_netflix <- read.csv("output/netflix_mse_sample_NoLink_2_.csv")[,2]
+  mse_netflix_baseline <- read.csv("output/baseline_mse_2.csv")[,2]
+  mse_netflix_twostep_read = read.csv("output/twostep_mse_2_.csv")
+  mse_netflix_twostep = rep(0,T_)
+  for (i in 1:T_){
+    mse_netflix_twostep[i] = mse_netflix_twostep_read[[i+1]]
+  }
+  mse_netflix_tensor = read.csv("output/baseline_mse_tensor_2_.csv")[,2]
+  mse_data <- data.frame("t"=seq.Date(as.Date(origin),as.Date(finish),by=22),"Static"=mse_netflix_baseline,"TwoStep"=mse_netflix_twostep,
+                         "Tensor"=mse_netflix_tensor,"DLRTR"=mse_netflix)
+  mydata <- melt(mse_data,id="t")
+  ggplot(data = mydata,aes(x=t,y=value,group=variable,
+                                color=variable))+
+    geom_line(size=1)+
+    scale_colour_discrete(name="Estimator",
+                          labels=c("Static","TwoStep","Tensor","DLR"))+
+    scale_x_continuous(name="Date",limits = c(as.Date(origin),as.Date(finish_)),breaks =seq.Date(as.Date(origin),as.Date(finish_),by=172))+
+    scale_y_continuous(name="Mean Square Error",limits=c(0.2,2.0),breaks = seq(0.2,2.0,0.3))+
+    theme(panel.grid.minor = element_blank(),legend.position = c(.85,.15),
+          legend.box.background = element_rect(color="black"),
+          axis.text.x = element_text(angle = 70, hjust = 0, vjust = 0,size=16),
+          axis.title.x=element_text(size=18),
+          axis.title.y=element_text(size=18),
+          axis.text.y=element_text(size=18),
+          legend.title =element_text(size=18),
+          legend.text = element_text(size=18))
 }
-mse_baseline = matrix(0,T_,101)
-for (i in 1:T_) {
-  mse_baseline[i,] <- read.csv(paste("output/netflix_output/baseline_mse_",i,".csv",sep = ""))[1:101,2]
+# figure 5 right
+if (pic=='new'){
+  mse_netflix <- read.csv("output/netflix_mse_sample_NoLink_.csv")[,2]
+  #mse_netflix_link <- read.csv("output/netflix_mse_sample_Link_.csv")[,2]
+  mse_netflix_baseline <- read.csv("output/baseline_mse.csv")[,2]
+  mse_netflix_twostep_read = read.csv("output/twostep_mse.csv")
+  mse_netflix_twostep = rep(0,T_)
+  for (i in 1:T_){
+    mse_netflix_twostep[i] = mse_netflix_twostep_read[[i+1]]
+  }
+  mse_netflix_tensor = read.csv("output/baseline_mse_tensor.csv")[,2]
+  mse_data <- data.frame("t"=seq.Date(as.Date(origin),as.Date(finish),by=22),"Static"=mse_netflix_baseline,"TwoStep"=mse_netflix_twostep,
+                         "Tensor"=mse_netflix_tensor,"DLRTR"=mse_netflix)
+  mydata <- melt(mse_data,id="t")
+  ggplot(data = mydata,aes(x=t,y=value,group=variable,
+                           color=variable))+
+    geom_line(size=1)+
+    scale_colour_discrete(name="Estimator",
+                          labels=c("Static","TwoStep","Tensor","DLR"))+
+    scale_x_continuous(name="Date",limits = c(as.Date(origin),as.Date(finish_)),breaks =seq.Date(as.Date(origin),as.Date(finish_),by=172))+
+    scale_y_continuous(name="Mean Square Error",limits=c(0.2,2.0),breaks = seq(0.2,2.0,0.3))+
+    theme(panel.grid.minor = element_blank(),legend.position = c(.85,.15),
+          legend.box.background = element_rect(color="black"),
+          axis.text.x = element_text(angle = 70, hjust = 0, vjust = 0,size=16),
+          axis.title.x=element_text(size=18),
+          axis.title.y=element_text(size=18),
+          axis.text.y=element_text(size=18),
+          legend.title =element_text(size=18),
+          legend.text = element_text(size=18))
 }
-mse_netflix = mse_total[,73]
-mse_netflix_baseline = mse_baseline[,73]
-mse_netflix_twostep = read.csv("output/netflix_output/baseline_mse_twostep")[,2]
-mse_netflix_tensor = read.csv("output/netflix_output/baseline_mse_tensor")[,2]
-mse_data <- data.frame("t"=seq.Date(as.Date(origin),as.Date(finish),by=22),"Static"=mse_netflix_baseline,"TwoStep"=mse_netflix_twostep,
-                       "Tensor"=mse_netflix_tensor,"DLRTR"=mse_netflix)
-mydata <- melt(mse_data,id="t")
-ggplot(data = mydata,aes(x=t,y=value,group=variable,
-                         color=variable))+
-  geom_line(size=1)+
-  scale_colour_discrete(name="Estimator",
-                        labels=c("Static","TwoStep","Tensor","DLR"))+
-  scale_x_continuous(name="Date",limits = c(as.Date(origin),as.Date(finish_)),breaks =seq.Date(as.Date(origin),as.Date(finish_),by=172))+
-  scale_y_continuous(name="Mean Square Error",limits=c(0,1.5),breaks = seq(0,1.5,0.3))+
-  theme(panel.grid.minor = element_blank(),legend.position = c(.85,.25),
-        legend.box.background = element_rect(color="black"),
-        axis.text.x = element_text(angle = 70, hjust = 0, vjust = 0,size=16),
-        axis.title.x=element_text(size=18),
-        axis.title.y=element_text(size=18),
-        axis.text.y=element_text(size=18),
-        legend.title =element_text(size=18),
-        legend.text = element_text(size=18))
 
 #
 # Figure 6
