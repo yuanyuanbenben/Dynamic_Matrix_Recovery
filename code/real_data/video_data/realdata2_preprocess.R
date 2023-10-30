@@ -119,4 +119,4 @@ for (t in 1:T_) {
   S_total[3,t,,] = m3
 }
 
-save.image("data/lions_video.RData")
+save.image("output/lions_video.RData")
