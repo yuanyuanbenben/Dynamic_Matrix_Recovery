@@ -148,4 +148,4 @@ for (i in 1:T_) {
 #   c3 <- c2[-index_3]
 #   train_Y_total_cv4[[i]] <- c3
 # }
-save.image("data/netflixdata.RData")
+save.image("output/netflixdata.RData")
