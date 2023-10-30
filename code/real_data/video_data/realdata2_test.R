@@ -19,7 +19,7 @@ source("code/real_data/video_data/cs_baseline_FISTA.R")
 source("code/real_data/help_functions.R")
 source("code/real_data/video_data/robust_pca.R")
 
-load("data/lions_video.RData")
+load("output/lions_video.RData")
 
 cl.cores = detectCores(logical = F)
 cl <- makeCluster(21)
