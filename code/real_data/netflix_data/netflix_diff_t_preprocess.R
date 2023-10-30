@@ -99,4 +99,4 @@ for (i in 1:T_) {
 
 
 
-save.image("data/diff_t.RData")
+save.image("output/diff_t.RData")
