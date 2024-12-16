@@ -1,4 +1,5 @@
-## Materials for "Dynamic Matrix Recovery"(<a href="https://doi.org/10.1080/01621459.2023.2297468">https://doi.org/10.1080/01621459.2023.2297468</a>)
+## Materials for "Dynamic Matrix Recovery"
+<a href="https://doi.org/10.1080/01621459.2023.2297468">https://doi.org/10.1080/01621459.2023.2297468</a>
 
 ### Overview
 
